@@ -7,6 +7,7 @@
 </script>
 <html lang="es">
 <head>
+  <meta name="robots" content="noindex, nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SEO Dashboard - REMAX Chile</title>
@@ -99,16 +100,16 @@ h2.section-title:first-child { margin-top: 0; }
 <header>
   <h1>SEO Dashboard · REMAX Chile</h1>
   <nav>
-    <button id="btn-web" class="active" onclick="showTab('web')">Web</button>
+    <button id="btn-tendencias" onclick="showTab('tendencias')">📈 Tendencias</button>
+    <button id="btn-web" onclick="showTab('web')">Web</button>
     <button id="btn-ilist" onclick="showTab('ilist')">iList</button>
     <button id="btn-google" onclick="showTab('google')">Google</button>
-    <button id="btn-tendencias" onclick="showTab('tendencias')">📈 Tendencias</button>
   </nav>
 </header>
 <main>
 
   <!-- WEB SECTION -->
-  <section id="web" class="section active">
+  <section id="web" class="section">
     <div class="update-info">Última actualización: <span id="web-fecha"></span> · Próxima actualización: lunes 9:00 AM</div>
     <div class="cards">
       <div class="card" onclick="showDetail('seo_audit')">
@@ -262,7 +263,7 @@ h2.section-title:first-child { margin-top: 0; }
 
 
   <!-- TENDENCIAS SECTION -->
-  <section id="tendencias" class="section">
+  <section id="tendencias" class="section active">
     <div class="update-info">Evolución histórica · Snapshot actual: <strong id="snap-count"></strong> · Cada revisión agrega un nuevo punto al gráfico</div>
 
     <div class="snapshot-nav" id="snapshot-nav"></div>
