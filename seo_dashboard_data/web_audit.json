@@ -1,0 +1,63 @@
+{
+  "fecha": "2026-06-30",
+  "dominio": "remax.cl",
+  "historico": [
+    {"fecha": "2026-06-17", "seo_audit": 58, "technical_seo": 45, "ai_visibility": 40}
+  ],
+  "seo_audit": {
+    "score": 67,
+    "resumen": "Mejora importante: el <title> ahora es descriptivo y con keywords ('Propiedades en Venta y Arriendo en Chile | RE/MAX Chile'), y og:title/og:description están presentes en el DOM renderizado. Persisten ausencia de H1, canonical, og:image, Twitter Card y atributo lang vacío.",
+    "criticos": [
+      "Sin H1 en la página de inicio",
+      "Sin <link rel=canonical>",
+      "Atributo lang del <html> está vacío (debería ser 'es' o 'es-CL')",
+      "og:image ausente — perjudica sharing en redes sociales",
+      "Sin Twitter Card meta tags"
+    ],
+    "advertencias": [
+      "8 de 22 imágenes sin atributo alt",
+      "og:title y og:description existen en el DOM renderizado, pero NO en el HTML inicial (CSR) — invisible para crawlers sin JS"
+    ],
+    "positivos": [
+      "Title optimizado: 'Propiedades en Venta y Arriendo en Chile | RE/MAX Chile' (corregido desde 'Home')",
+      "Meta description completa y descriptiva (>150 caracteres)",
+      "og:title y og:description presentes en DOM renderizado",
+      "Schema Organization + WebSite con SearchAction en JSON-LD",
+      "robots.txt permite crawling general; sitemap.xml indexado con subsitemaps (listings, oficinas, agentes)"
+    ]
+  },
+  "technical_seo": {
+    "score": 45,
+    "resumen": "Sin cambios: el sitio sigue siendo 100% CSR (React). El HTML inicial tiene solo 2.4 KB y cero contenido de texto — todo se inyecta vía JavaScript. Los meta tags, título y schema están ausentes del HTML fuente. La arquitectura CSR continúa siendo el principal problema técnico.",
+    "criticos": [
+      "HTML inicial vacío (2.4 KB, sin SSR/SSG/prerender) — todo el contenido depende de JavaScript",
+      "Title, meta description, og tags y JSON-LD solo existen en DOM renderizado, no en HTML fuente"
+    ],
+    "advertencias": [
+      "robots.txt tiene regla 'User-agent: *AI* Disallow: /' que entra en conflicto con permisos explícitos dados a GPTBot, ClaudeBot, etc.",
+      "Verificar Core Web Vitals (LCP/CLS) por el peso de JS necesario para renderizar contenido"
+    ],
+    "positivos": [
+      "HTTPS activo",
+      "Meta viewport configurado correctamente para mobile",
+      "sitemap.xml presente con índice de subsitemaps (listings, oficinas, agentes, shortlinks)"
+    ]
+  },
+  "ai_visibility": {
+    "score": 40,
+    "resumen": "Sin cambios estructurales. robots.txt sigue otorgando permisos a los principales bots de IA, pero la arquitectura CSR impide que estos crawlers indexen contenido real. El schema es básico (Organization + WebSite) y no incluye RealEstateListing, lo que limita la comprensión del catálogo por parte de modelos de IA.",
+    "criticos": [
+      "Contenido no disponible para crawlers de IA sin ejecución de JS (arquitectura CSR sin cambios)",
+      "Regla '*AI* Disallow: /' en robots.txt puede bloquear bots de IA genéricos no listados explícitamente"
+    ],
+    "advertencias": [
+      "Sin schema RealEstateListing — los modelos de IA no pueden entender el catálogo de propiedades estructuradamente",
+      "Sin datos estructurados de agentes (schema Person/RealEstateAgent)"
+    ],
+    "positivos": [
+      "Permisos explícitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot",
+      "Schema Organization y WebSite con SearchAction presentes",
+      "Sitemap estructurado facilita descubrimiento de URLs a crawlers avanzados"
+    ]
+  }
+}

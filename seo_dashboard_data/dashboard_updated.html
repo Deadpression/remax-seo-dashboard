@@ -1,0 +1,742 @@
+<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Seo Dashboard Remax",
+  "schemaVersion": 1,
+  "description": "Dashboard de seguimiento SEO de REMAX Chile: scores semanales de SEO Audit, Technical SEO y AI Visibility (sección Web) y conteo de palabras/caracteres en descripciones de Agentes, Oficinas y Propiedades vía API (sección iList)."
+}
+</script>
+<html lang="es">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Dashboard - REMAX Chile</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Gotham", "Gotham Narrow", Arial, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f7f5ee; color: #232323;
+}
+header {
+  background: #000e35; color: #fff; padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  border-bottom: 4px solid #0043ff;
+}
+header h1 { font-size: 18px; margin: 0; font-weight: 700; letter-spacing: .02em; }
+nav { display: flex; gap: 8px; }
+nav button {
+  background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3);
+  padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 700;
+  font-family: inherit; transition: background .15s, color .15s;
+}
+nav button.active { background: #0043ff; color: #fff; border-color: #0043ff; }
+main { padding: 24px; max-width: 1100px; margin: 0 auto; }
+.section { display: none; }
+.section.active { display: block; }
+.update-info { color: #6b6b6b; font-size: 13px; margin-bottom: 16px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.card {
+  background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,14,53,0.08);
+  cursor: pointer; transition: transform .1s, box-shadow .1s; border: 1px solid #eceae0;
+  border-top: 3px solid #0043ff;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,14,53,0.12); }
+.card .score { font-size: 42px; font-weight: 700; }
+.card .label { font-size: 14px; color: #555; margin-top: 4px; }
+.score.good { color: #1f7a3a; }
+.score.mid { color: #b8780a; }
+.score.bad { color: #ff1200; }
+.detail { background: #fff; border-radius: 10px; padding: 24px; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,14,53,0.08); display:none; border-top: 3px solid #0043ff; }
+.detail.active { display: block; }
+.detail h2 { margin-top: 0; color: #000e35; }
+.detail h3 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: #888; margin: 18px 0 8px; }
+.detail ul { margin: 4px 0; padding-left: 20px; }
+.detail li { margin-bottom: 4px; line-height: 1.4; }
+.back-link { color: #0043ff; cursor: pointer; font-size: 14px; font-weight: 700; display: inline-block; margin-bottom: 12px; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eee; }
+th { color: #888; font-weight: 700; font-size: 12px; text-transform: uppercase; }
+tr.zero { color: #ff1200; }
+.badge { display:inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+.badge.good { background:#e6f4ea; color:#1f7a3a; }
+.badge.mid { background:#fff4e0; color:#b8780a; }
+.badge.bad { background:#fdecea; color:#ff1200; }
+.note { background: #fff4e0; border-left: 4px solid #0043ff; padding: 10px 14px; font-size: 13px; border-radius: 4px; margin-top: 16px; color: #51493a; }
+.metric-row { display:flex; gap:24px; flex-wrap:wrap; margin-bottom: 16px; }
+.metric { background:#fff; border-radius:10px; padding:18px 22px; box-shadow:0 1px 3px rgba(0,14,53,0.08); flex:1; min-width:160px; border-top: 3px solid #0043ff; }
+.metric .num { font-size: 32px; font-weight:700; color:#0043ff; }
+.metric .lab { font-size: 13px; color:#666; margin-top:4px; }
+h2.section-title { color:#000e35; border-bottom: 2px solid #0043ff; padding-bottom: 6px; margin-top: 28px; }
+h2.section-title:first-child { margin-top: 0; }
+.conclusions { margin: 4px 0 0; padding-left: 20px; }
+.conclusions li { margin-bottom: 6px; line-height: 1.5; }
+.alert-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom: 20px; }
+.alert-card { background:#fff; border-radius:10px; padding:16px 20px; box-shadow:0 1px 3px rgba(0,14,53,0.08); flex:1; min-width:180px; border-top: 3px solid #ff1200; }
+.alert-card .num { font-size: 36px; font-weight:700; color:#ff1200; }
+.alert-card .lab { font-size: 13px; color:#666; margin-top:2px; }
+.alert-card.warn { border-top-color: #b8780a; }
+.alert-card.warn .num { color: #b8780a; }
+.alert-card.ok { border-top-color: #1f7a3a; }
+.alert-card.ok .num { color: #1f7a3a; }
+.ilist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.ilist-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,14,53,0.08); border: 1px solid #eceae0; }
+.ilist-card h3 { margin: 0 0 12px; color: #000e35; font-size: 16px; }
+.ilist-card .big-pct { font-size: 48px; font-weight: 700; line-height: 1; }
+.ilist-card .big-pct.crit { color: #ff1200; }
+.ilist-card .big-pct.warn { color: #b8780a; }
+.ilist-card .big-pct.good { color: #1f7a3a; }
+.ilist-card .sub { font-size: 13px; color: #666; margin-top: 4px; }
+.ilist-card .avgs { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; font-size: 13px; color: #444; }
+.ilist-card .avgs span { font-weight: 700; color: #000e35; }
+
+.snapshot-nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.snap-pill { background:#e8edf5; color:#000e35; padding:4px 12px; border-radius:20px; font-size:13px; font-weight:700; cursor:default; }
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>SEO Dashboard · REMAX Chile</h1>
+  <nav>
+    <button id="btn-tendencias" onclick="showTab('tendencias')">📈 Tendencias</button>
+    <button id="btn-web" onclick="showTab('web')">Web</button>
+    <button id="btn-ilist" onclick="showTab('ilist')">iList</button>
+    <button id="btn-google" onclick="showTab('google')">Google</button>
+  </nav>
+</header>
+<main>
+
+  <!-- WEB SECTION -->
+  <section id="web" class="section">
+    <div class="update-info">Última actualización: <span id="web-fecha"></span> · Próxima actualización: lunes 9:00 AM</div>
+    <div class="cards">
+      <div class="card" onclick="showDetail('seo_audit')">
+        <div class="score" id="score-seo_audit"></div>
+        <div class="label">SEO Audit</div>
+      </div>
+      <div class="card" onclick="showDetail('technical_seo')">
+        <div class="score" id="score-technical_seo"></div>
+        <div class="label">Technical SEO</div>
+      </div>
+      <div class="card" onclick="showDetail('ai_visibility')">
+        <div class="score" id="score-ai_visibility"></div>
+        <div class="label">AI Visibility</div>
+      </div>
+    </div>
+
+    <div class="detail" id="detail-seo_audit">
+      <span class="back-link" onclick="hideDetails()">&larr; Volver</span>
+      <h2>SEO Audit</h2>
+      <p id="resumen-seo_audit"></p>
+      <h3>Críticos</h3><ul id="criticos-seo_audit"></ul>
+      <h3>Advertencias</h3><ul id="advertencias-seo_audit"></ul>
+      <h3>Positivos</h3><ul id="positivos-seo_audit"></ul>
+    </div>
+
+    <div class="detail" id="detail-technical_seo">
+      <span class="back-link" onclick="hideDetails()">&larr; Volver</span>
+      <h2>Technical SEO</h2>
+      <p id="resumen-technical_seo"></p>
+      <h3>Críticos</h3><ul id="criticos-technical_seo"></ul>
+      <h3>Advertencias</h3><ul id="advertencias-technical_seo"></ul>
+      <h3>Positivos</h3><ul id="positivos-technical_seo"></ul>
+    </div>
+
+    <div class="detail" id="detail-ai_visibility">
+      <span class="back-link" onclick="hideDetails()">&larr; Volver</span>
+      <h2>AI Visibility</h2>
+      <p id="resumen-ai_visibility"></p>
+      <h3>Críticos</h3><ul id="criticos-ai_visibility"></ul>
+      <h3>Advertencias</h3><ul id="advertencias-ai_visibility"></ul>
+      <h3>Positivos</h3><ul id="positivos-ai_visibility"></ul>
+    </div>
+  </section>
+
+  <!-- ILIST SECTION -->
+  <section id="ilist" class="section">
+    <div class="update-info">Análisis completo vía API: <strong>2026-06-30</strong> · 1076 agentes + 51 oficinas + 8547 propiedades · Próximo refresco: automático lunes 9:00 AM</div>
+
+    <div class="ilist-grid">
+      <div class="ilist-card">
+        <h3>🏢 Oficinas</h3>
+        <div class="big-pct warn">51%</div>
+        <div class="sub">deficientes (26 de 51)</div>
+        <div class="avgs">Umbral mínimo: 600 car</div>
+      </div>
+      <div class="ilist-card">
+        <h3>👤 Agentes</h3>
+        <div class="big-pct warn">68%</div>
+        <div class="sub">deficientes (726 de 1076 activos)</div>
+        <div class="avgs">Umbral mínimo: 600 car</div>
+      </div>
+      <div class="ilist-card">
+        <h3>🏠 Propiedades</h3>
+        <div class="big-pct good">0.12%</div>
+        <div class="sub">deficientes en Excel (10 de 8547)</div>
+        <div class="avgs">Umbral mínimo: 590 car</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Oficinas — Detalle (prioridad alta)</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">26 de 51 oficinas no alcanzan el umbral mínimo (600 caracteres). Ordenadas de mayor a menor contenido.</p>
+    <table>
+      <thead><tr><th>Oficina</th><th>Palabras</th><th>Caracteres</th><th>Estado</th></tr></thead>
+      <tbody id="tbl-oficinas"></tbody>
+    </table>
+
+    <h2 class="section-title" style="margin-top:32px">Agentes — Perfiles sin descripción</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">Agentes con 0 palabras en bio. Detalle completo en <em>ilist_resultados_2026-06-30.xlsx</em>.</p>
+    <table>
+      <thead><tr><th>Nombre</th><th>Palabras</th><th>Caracteres</th><th>Estado</th></tr></thead>
+      <tbody id="tbl-worst-agentes"></tbody>
+    </table>
+
+    <h2 class="section-title" style="margin-top:32px">Propiedades — Deficientes (10 casos en Excel)</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">10 de 8547 propiedades activas en Excel tienen descripción deficiente (&lt;30 palabras o &lt;150 caracteres). Ver Excel para detalle.</p>
+    <table>
+      <thead><tr><th>MLS ID</th><th>Palabras</th><th>Caracteres</th><th>URL</th><th>Estado</th></tr></thead>
+      <tbody id="tbl-propiedades"></tbody>
+    </table>
+
+    <div class="note" style="margin-top:24px">
+      <strong>Metodología 2026-06-30:</strong> Datos obtenidos directamente de la API de búsqueda de remax.cl (Azure Cognitive Search). Campos medidos: Slogan + Closer + BulletPoint1/2/3 para agentes y oficinas; ListingDescriptions (descripción más larga entre todos los índices) para propiedades. HTML decodificado antes de contar. Universo completo: sin muestreo. Umbrales: Agentes ≥600 car; Oficinas ≥600 car; Propiedades ≥590 car.<br><br>
+      <strong>Archivo Excel:</strong> <em>ilist_resultados_2026-06-30.xlsx</em> (carpeta "Revisión SEO dashboard") contiene tablas completas con estado ✓/⚠ por entidad.
+    </div>
+  </section>
+
+  <!-- GOOGLE SECTION -->
+  <section id="google" class="section">
+    <div class="update-info">Search Console: <span id="gsc-periodo"></span> · Analytics (GA4): <span id="ga-periodo"></span></div>
+
+    <h2 class="section-title">Google Search Console</h2>
+
+    <div class="metric-row">
+      <div class="metric"><div class="num" id="gsc-clicks"></div><div class="lab">Clics totales (90 días)</div></div>
+      <div class="metric"><div class="num" id="gsc-impressions"></div><div class="lab">Impresiones totales</div></div>
+      <div class="metric"><div class="num" id="gsc-ctr"></div><div class="lab">CTR promedio</div></div>
+      <div class="metric"><div class="num" id="gsc-pos"></div><div class="lab">Posición promedio</div></div>
+    </div>
+
+    <h3>Conclusiones</h3>
+    <ul class="conclusions" id="gsc-conclusiones"></ul>
+
+    <h3 style="margin-top:24px">Top páginas por clics</h3>
+    <table>
+      <thead><tr><th>Página</th><th>Clics</th><th>Impresiones</th><th>CTR</th><th>Posición</th></tr></thead>
+      <tbody id="tbl-gsc-paginas"></tbody>
+    </table>
+
+    <h3 style="margin-top:24px">Top consultas (queries)</h3>
+    <table>
+      <thead><tr><th>Consulta</th><th>Clics</th><th>Impresiones</th><th>CTR</th><th>Posición</th></tr></thead>
+      <tbody id="tbl-gsc-queries"></tbody>
+    </table>
+
+    <h2 class="section-title">Google Analytics (GA4)</h2>
+
+    <div class="metric-row">
+      <div class="metric"><div class="num" id="ga-activos"></div><div class="lab">Usuarios activos</div></div>
+      <div class="metric"><div class="num" id="ga-nuevos"></div><div class="lab">Usuarios nuevos</div></div>
+    </div>
+
+    <h3>Conclusiones</h3>
+    <ul class="conclusions" id="ga-conclusiones"></ul>
+
+    <h3 style="margin-top:24px">Sesiones por canal</h3>
+    <table>
+      <thead><tr><th>Canal</th><th>Sesiones</th><th>Usuarios nuevos</th></tr></thead>
+      <tbody id="tbl-ga-canales"></tbody>
+    </table>
+
+    <h3 style="margin-top:24px">Sesiones por fuente manual</h3>
+    <table>
+      <thead><tr><th>Fuente</th><th>Sesiones</th></tr></thead>
+      <tbody id="tbl-ga-fuentes"></tbody>
+    </table>
+
+    <div class="note">
+      <strong>Fuentes:</strong> Excel "Performance on Search" (Google Search Console, 09 mar – 08 jun 2026) y PDF "Resumen de adquisiciones" (Google Analytics GA4, 12 mar – 09 jun 2026).
+    </div>
+  </section>
+
+
+  <!-- TENDENCIAS SECTION -->
+  <section id="tendencias" class="section active">
+    <div class="update-info">Evolución histórica · Snapshot actual: <strong id="snap-count"></strong> · Cada revisión agrega un nuevo punto al gráfico</div>
+
+    <div class="snapshot-nav" id="snapshot-nav"></div>
+
+    <h2 class="section-title">iList — % Descripciones Deficientes</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">Objetivo: reducir el porcentaje con cada revisión mensual.</p>
+    <div style="position:relative;height:280px;margin-bottom:32px">
+      <canvas id="chart-ilist-pct"></canvas>
+    </div>
+
+    <h2 class="section-title">iList — Total con Descripción Deficiente</h2>
+    <div style="position:relative;height:280px;margin-bottom:32px">
+      <canvas id="chart-ilist-abs"></canvas>
+    </div>
+
+    <h2 class="section-title">Web — Scores SEO</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">Objetivo: subir los tres scores hacia 100.</p>
+    <div style="position:relative;height:280px;margin-bottom:32px">
+      <canvas id="chart-web-scores"></canvas>
+    </div>
+
+    <h2 class="section-title">Google Search Console — Clics e Impresiones</h2>
+    <div style="position:relative;height:280px;margin-bottom:32px">
+      <canvas id="chart-gsc"></canvas>
+    </div>
+
+    <h2 class="section-title">Google Search Console — CTR y Posición Promedio</h2>
+    <div style="position:relative;height:280px;margin-bottom:32px">
+      <canvas id="chart-gsc2"></canvas>
+    </div>
+
+    <div class="note" style="margin-top:16px">
+      <strong>¿Cómo agregar un nuevo snapshot?</strong><br>
+      Tras cada revisión mensual, ejecutar el script <code>add_snapshot.py</code> en la carpeta <em>seo_dashboard_data/</em>. 
+      Este script lee los resultados actuales y agrega un nuevo punto al gráfico sin borrar el histórico.
+    </div>
+  </section>
+
+
+  
+</main>
+
+<script>
+const DATA = {
+  web: {"fecha": "2026-06-30", "dominio": "remax.cl", "seo_audit": {"score": 67, "resumen": "Mejora importante: el <title> ahora es descriptivo y con keywords ('Propiedades en Venta y Arriendo en Chile | RE/MAX Chile'), y og:title/og:description están presentes en el DOM renderizado. Persisten ausencia de H1, canonical, og:image, Twitter Card y atributo lang vacío.", "criticos": ["Sin H1 en la página de inicio", "Sin <link rel=canonical>", "Atributo lang del <html> está vacío (debería ser 'es' o 'es-CL')", "og:image ausente — perjudica sharing en redes sociales", "Sin Twitter Card meta tags"], "advertencias": ["8 de 22 imágenes sin atributo alt", "og:title y og:description existen en el DOM renderizado, pero NO en el HTML inicial (CSR) — invisible para crawlers sin JS"], "positivos": ["Title optimizado: 'Propiedades en Venta y Arriendo en Chile | RE/MAX Chile' (corregido desde 'Home')", "Meta description completa y descriptiva (>150 caracteres)", "og:title y og:description presentes en DOM renderizado", "Schema Organization + WebSite con SearchAction en JSON-LD", "robots.txt permite crawling general; sitemap.xml indexado con subsitemaps (listings, oficinas, agentes)"]}, "technical_seo": {"score": 45, "resumen": "Sin cambios: el sitio sigue siendo 100% CSR (React). El HTML inicial tiene solo 2.4 KB y cero contenido de texto — todo se inyecta vía JavaScript. Los meta tags, título y schema están ausentes del HTML fuente. La arquitectura CSR continúa siendo el principal problema técnico.", "criticos": ["HTML inicial vacío (2.4 KB, sin SSR/SSG/prerender) — todo el contenido depende de JavaScript", "Title, meta description, og tags y JSON-LD solo existen en DOM renderizado, no en HTML fuente"], "advertencias": ["robots.txt tiene regla 'User-agent: *AI* Disallow: /' que entra en conflicto con permisos explícitos dados a GPTBot, ClaudeBot, etc.", "Verificar Core Web Vitals (LCP/CLS) por el peso de JS necesario para renderizar contenido"], "positivos": ["HTTPS activo", "Meta viewport configurado correctamente para mobile", "sitemap.xml presente con índice de subsitemaps (listings, oficinas, agentes, shortlinks)"]}, "ai_visibility": {"score": 40, "resumen": "Sin cambios estructurales. robots.txt sigue otorgando permisos a los principales bots de IA, pero la arquitectura CSR impide que estos crawlers indexen contenido real. El schema es básico (Organization + WebSite) y no incluye RealEstateListing, lo que limita la comprensión del catálogo por parte de modelos de IA.", "criticos": ["Contenido no disponible para crawlers de IA sin ejecución de JS (arquitectura CSR sin cambios)", "Regla '*AI* Disallow: /' en robots.txt puede bloquear bots de IA genéricos no listados explícitamente"], "advertencias": ["Sin schema RealEstateListing — los modelos de IA no pueden entender el catálogo de propiedades estructuradamente", "Sin datos estructurados de agentes (schema Person/RealEstateAgent)"], "positivos": ["Permisos explícitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot", "Schema Organization y WebSite con SearchAction presentes", "Sitemap estructurado facilita descubrimiento de URLs a crawlers avanzados"]}},
+  ilist: {"fecha": "2026-06-30", "oficinas": [{"n": "RE/MAX - NEXUS", "p": 0, "c": 0}, {"n": "RE/MAX - URBANO", "p": 50, "c": 310}, {"n": "RE/MAX - ABSOLUTE", "p": 192, "c": 1293}, {"n": "RE/MAX - ICON", "p": 82, "c": 570}, {"n": "RE/MAX - ENLACE", "p": 152, "c": 1018}, {"n": "RE/MAX - SPIRIT", "p": 0, "c": 0}, {"n": "RE/MAX - COSTANERA", "p": 51, "c": 368}, {"n": "RE/MAX - ACCION", "p": 112, "c": 709}, {"n": "RE/MAX - FUTURO", "p": 105, "c": 816}, {"n": "RE/MAX - EXTRA", "p": 120, "c": 773}, {"n": "RE/MAX - BURÓ", "p": 78, "c": 562}, {"n": "RE/MAX - PASSION", "p": 179, "c": 1336}, {"n": "RE/MAX - FAMILY", "p": 91, "c": 625}, {"n": "RE/MAX - TITANIO", "p": 223, "c": 1495}, {"n": "RE/MAX - SELECT", "p": 76, "c": 487}, {"n": "RE/MAX - ELITE", "p": 0, "c": 0}, {"n": "RE/MAX - SYNERGY II", "p": 237, "c": 1518}, {"n": "RE/MAX - SILVER", "p": 170, "c": 1326}, {"n": "RE/MAX - EXCLUSIVE", "p": 186, "c": 1263}, {"n": "RE/MAX - CAPITAL", "p": 190, "c": 1272}, {"n": "RE/MAX - CUMBRE", "p": 0, "c": 0}, {"n": "RE/MAX - AVENTUS", "p": 0, "c": 0}, {"n": "RE/MAX - REALTY", "p": 101, "c": 749}, {"n": "RE/MAX - REALTY II", "p": 0, "c": 0}, {"n": "RE/MAX - BOSQUES", "p": 96, "c": 661}, {"n": "RE/MAX - PRINCIPAL", "p": 0, "c": 0}, {"n": "RE/MAX - ADVANCE", "p": 199, "c": 1231}, {"n": "RE/MAX - SUMMIT", "p": 163, "c": 1015}, {"n": "RE/MAX - LOS RÍOS", "p": 0, "c": 0}, {"n": "RE/MAX - PREMIER", "p": 191, "c": 1256}, {"n": "RE/MAX - SYNERGY", "p": 594, "c": 3980}, {"n": "RE/MAX - REAL HOME", "p": 0, "c": 0}, {"n": "RE/MAX - SOLUTIONS", "p": 0, "c": 0}, {"n": "RE/MAX - START", "p": 0, "c": 0}, {"n": "RE/MAX - OESTE", "p": 105, "c": 700}, {"n": "RE/MAX - AGORA", "p": 259, "c": 1672}, {"n": "RE/MAX - GOLDEN", "p": 0, "c": 0}, {"n": "RE/MAX - CENTRAL", "p": 108, "c": 704}, {"n": "RE/MAX - FIRST", "p": 188, "c": 1205}, {"n": "RE/MAX - CORDILLERA", "p": 267, "c": 1720}, {"n": "RE/MAX - ONE", "p": 0, "c": 0}, {"n": "RE/MAX - ECOPARTNERS", "p": 46, "c": 308}, {"n": "RE/MAX - CONTIGO", "p": 80, "c": 596}, {"n": "RE/MAX - ABSOLUTE II", "p": 183, "c": 1221}, {"n": "RE/MAX - SUPREME", "p": 242, "c": 1725}, {"n": "RE/MAX - TRUE HOME", "p": 5, "c": 31}, {"n": "RE/MAX - INNOVA", "p": 47, "c": 318}, {"n": "RE/MAX - DIAMANTE", "p": 0, "c": 0}, {"n": "RE/MAX - GREENHOUSE", "p": 0, "c": 0}, {"n": "RE/MAX - PRO", "p": 0, "c": 0}, {"n": "RE/MAX - UNIQUE", "p": 0, "c": 0}], "worst_agentes": [{"n": "Gerardo Porteous", "p": 279, "c": 1792}, {"n": "Guillermo Rodriguez Aguilera", "p": 274, "c": 1820}, {"n": "Francisco Ferrer", "p": 234, "c": 1593}, {"n": "Oscar Pescetto Jerez", "p": 231, "c": 1598}, {"n": "Aracelly Arancibia Aliste", "p": 224, "c": 1464}, {"n": "Carolaine Ruff Silva", "p": 222, "c": 1431}, {"n": "Ronny Saa Torres", "p": 220, "c": 1370}, {"n": "BROKER Hernan Andrade", "p": 207, "c": 1520}, {"n": "Catalina Silva Pardo", "p": 206, "c": 1301}, {"n": "Manuel Garay", "p": 205, "c": 1318}], "zero_agentes": ["Jorge  Luis  Ramirez  Delgado", "Administración  R E M A X  Exclusive", "Hugo Knüst", "Maria Jose Orrego", "Carolina Gil Lajaña", "Bastian Zimmermann", "Natalia Knust", "Juan Pino Vera", "Juan Esteban Leon", "Leslie Olivares", "Laura Huenupe", "Carla Ruiz", "Alejandra Garrido Inostroza", "Mariadela Pavez", "Julien Delard Pizarro", "Paulina Ruiz", "Esteban Becerra", "Trinidad Fernandez", "Flor Rojas", "María Valentina Prado Donoso", "Daniela Aguilar", "Patricia Figueroa", "Jose Luis Vargas", "Pia Ramirez", "Cristian Morales", "Tatiana Tapia", "Team Austral Triana Marti Zagazeta", "Cristian López", "Adriana Avendaño Sanchez", "Cristal Mendoza Pinto", "Javier Micin", "Cristal Mendoza Pinto", "Soledad Prieto Irribarra", "Consuelo Cerda", "Silvia Sepúlveda Contreras", "Carmen Lazo", "Maria Graciela Solano", "Facundo Sarobe", "Sebastián Aliaga", "Alejandro Quiroz", "Maria Loreto Vera", "Ana Maria Valdebenito", "Carmen Guerra", "Karen Cekalovic", "Claudia Oyarzo", "Andrea De La Fuente", "Felipe Olivares", "Karina Gomez", "Andres Bustos", "Manuel San Martin", "Team Austral Member Sebastian Andres Massad Pedrero", "Jacqueline Delgado", "Camila Gomez", "Leslie Valdes", "Paula Diaz Munizaga", "Arnoldo Moreno Urrea", "Yuli Abreu Leon TEAM YOORDLIS", "Marlene Torres", "Felipe Levipan TEAM INFINITY", "Marcela Cubillos", "Maritza Adames", "TEAM NUNES Giovanna Rivano", "Kimie  Inoue", "Alejandra Carvajal", "Administración REMAX ICON", "Ma. Verónica Riquelme", "Carolyne Avendaño", "Administración RE/MAX Bosques", "Andrea Rojas", "Flavio Tapia Carmagnani", "Javiera Pardo Ruz", "Ignacia Diaz Saez", "Luis Verdu", "Eduardo Bustos", "José Simpson González", "Graciela Urrutia", "Luis Castro", "Claudio Vera", "Pamela Diaz", "Natalia San Martín", "Mario Riquelme", "Pablo Vargas Meza", "Carlos Cuevas", "Monserrat Jorquera", "Claudia Oyarzo", "Benjamín Loyola Espinoza", "Pablo Jose Gariboldi", "Rodrigo Cordova", "Patricio Berrios", "Federico Tapia Ramírez", "Ricardo Adriazola", "Caroline Kamerling Russell", "Héctor Guzmán", "Cristian Avilés", "Administración  R E/ M A X  Select", "Administración  R E/ M A X  Buró", "Luciana Pereyra", "Maximiliano Schell", "Jorge Salazar Ahumada", "Mike Vivas Vivas", "Alejandra Negrete Arza", "Karla Catalan Torres", "Ana Galassi", "Gabriela Perez", "Mario Cortes Saavedra", "Giannina Gomez", "Viviana Leyton", "Alvaro Robles", "Pedro Rodriguez Reyes", "Administración REMAX One", "Paula Soto Morales", "Patricia Cordero", "Marcela Roman", "Macarena López", "Christian Aguilera Espinoza", "Constanza Castillo Avalos", "Fabiana Sotelo", "Yer Valencia", "Sabina Cruz Gutiérrez", "Claudia Jara", "Juan Carlos Hernandez", "Monica Arenas Huerta", "Pablo Godoy", "Francisco Barraza Ramírez TEAM YOORDLIS", "Daniela Saavedra", "Camila Hernández Auger", "Magdalena Rencoret", "Team Icarus - Trinidad Errázuriz", "BROKER Giovanna Bravo", "Team Icarus - Raimundo Cabrera", "Valeska Avello", "Dunia Rojas Sutil", "Eva Franch", "Team  Arellano  Claudia  Mengozzi", "María  Paz  Bautista", "Sylvia  Pino  Monroy", "Rodrigo  Bravo", "Grethel  Careaga", "Elena  Manríquez", "Mauricio Bittencourt", "Administración RE/MAX EXTRA", "Alejandra  Montero", "BROKER Katherine Borgeaud Salazar", "Marco Vera Temer Broker Owner", "Carlos Gonzalez Bustamante", "Gabriela Fuentealba", "Cesar Arcos Soto", "Gabriela Cifuentes", "Marcela Campos Bello", "Andrea Corrado", "Andrea Rojo", "Juanita Muñoz Riquelme TEAM YOORDLIS", "Vicky Candia White", "Paola Cofre", "Andres Naranjo Araya", "Claudia Arco Rojas", "Eugenia Pugh Muñoz", "Yasna Arquero Rodriguez", "Broker -   María  José  Zúñiga", "Cristian  Reyes", "Cristian Jerez TEAM YOORDLIS", "Enrique Villarroel", "Renato Soto Hidalgo", "Administración REMAX Titanio", "Blanca Bathich Peñaloza", "BROKER Alejandra Ugalde", "Gonzalo Calderón", "Fernando  Martinez", "Jimena Muñoz Miranda", "Valentina Fuentes", "Leonel Moran", "Rodrigo Estay", "Yildy Mendoza", "Fernando Baldissoni Miretti", "Rosa Soto", "Victor Fernandez", "Macarena Torres", "Alejandra Velis", "M Fernanda Sotomayor", "Angela Flores", "Josefa Ossa", "Pablo Cisternas", "Maria Muñoz Gonzalez", "Cindy Bazza Mercado", "Vanessa Costa", "Francisca Paredes", "Evelyn Caro", "Marco Iriarte Briceño    TEAM INFINITY", "Martin Trepicho", "Eric Salinas Mayne", "Zoraya Perez", "Administración REMAX Real Home", "BROKER Juan Pablo Pumarino", "Cristian Silva Corrales", "Rodrigo Morales", "Lilian Musalem Lamas", "Paulina Martinez Geiger", "Luis Norambuena", "Camila Ariz", "Camilo Araya Nuñez", "Angeles Perez Navarro", "María Paz Sepúlveda", "Daniela Zavala", "Team Austral Member Angelica Opazo", "Marisol Arias Acuña", "Nicolas Rothery", "Gonzalo Aracena", "Karen Vollmer", "Nancy Castro Howard", "Georgi Zencovich", "Carmen Luz Labbé", "Carolina De La Fuente", "Felipe Celis", "Trinidad Lazo", "Ramiro Tapia", "Lorena Burgos Vivanco", "Vidalia Rojas Arancibia", "Yuval  Ben  Haym", "test user", "Administración  R E/ M A X  Acción", "Administración  R E/ M A X  Enlace", "Administración  R E M A X  Innova", "Percy Morales", "Ramiro Becerra", "Administración REMAX Synergy", "Rocio Quevedo", "Joseph Rodriguez", "Carla Olmedo", "Jocelyn Armijo Bruna", "Rodolfo Hevia", "Luz Faúndez", "Luis Popovich", "Victor Proschler", "Ilse Sepulveda", "Patricio Monsalve", "Matías Barriga", "Walter Sommer", "Sol Caro", "Ximena Pardo", "Yenifer Valdes", "Paula Rodriguez", "Santiago Sánchez Silva", "Javiera Ruiz Morales", "Pia Muñoz", "Arnaud Koell               TEAM YOORDLIS", "Alejandra Miranda", "Claudia Lopez Sanchez", "Macarena Baraybar", "Gloria Avalos", "Javiera Zamorano", "Camilo Burgos Bustos", "Javier Pinto Gonzalez", "Mónica Bravo G.", "BROKER Juan Mauricio Quiroz", "Evelyn Bernner", "Ali Pinto", "Felipe Sepúlveda", "Camila Fischer Vallejo", "Administración  R E/ M A X  Supreme", "Administración RE/MAX Passion", "Carolina Andrea Vukasovic Milovic", "Karina Galvez", "Giancarlo Castillo", "Carolina Perez", "Jonatan Merlino", "Hernan Alonso Rocha", "Paola Castro", "Milena Essus", "Daniela Cheul", "Felipe Madariaga Galeno", "Maria Ignacia Jeno", "Jennifer Crew", "Marcela Kaftanski", "Alejandra McKay", "Patricio Barahona", "Natalia Zapata", "Administración REMAX Unique", "Marta Mackiewicz", "Sergio Huerta Reyes", "Alex Gajardo Innocenti", "Josefa Allel", "Margarita De La Fuente Ibañez", "Ana Maria Sir", "Camilo Hernandez", "Carolina Carvajal", "David Arellano Cornejo", "Rosmar Herrera", "Yolanda Lopez Diaz", "Pamela Gaviño", "Christian Chain", "B R O K E R  Karime  Sukni  Rogers", "Ronald  Ureta  Melgarejo", "Romeo Noriega", "Andres Preminger", "Maryelyn Laguado", "Francisco Sepulveda", "Gabriela Estrella", "BROKER OWNER RE/MAX INNOVA Olivier De Greef", "Leslie Aguilera Mejias", "Paulina Monsalve Manriquez", "Carlos Caceres", "Carla Mármol", "Constanza Igualt Swett", "Neila Pérez", "Franco Maureira", "Greysy Gomez", "Sebastian Vasquez", "Luis Gutierrez Zarate", "Paula Afani Saud - Broker Owner - Directora Comercial", "Cesar Rojas Arraño", "TEAM TRINI AMENABAR María José Guzmán", "Carola Rodriguez", "Fanny Valenzuela García", "Camila Mesina", "Daniela Blanco", "Carlos Tordecilla Castillo", "Silvana Mallardo", "Administración  R E/ M A X  Futuro", "Marina  Ratkevich", "Maité  Brito", "Carolina Caceres", "Gabriel Cabeza Perez", "Mateo Moral", "Sebastian Muñoz", "Salvador Gallardo", "Marcelo Escobar", "REMAX First", "BROKER Paulo Peña", "Daniela Bugedo", "Rodrigo Perez TEAM YOORDLIS", "Fanny Ortiz Poblete", "María José Karadima Labbé", "BROKER Eduardo Hola", "Matías Rozas", "Maria Fernanda Gomez", "Rafael Errázuriz", "Hugo Pollak", "Juan Carlos Margue", "Fabián Torres Mosquera", "Christian Araya Carreño        TEAM YOORDLIS", "Claudia Cortés", "Felipe Contreras Espinoza", "Manager Cindy Rebolledo", "Claudia Gonzalez", "Suzana Mimica", "Administración  R E/ M A X  Advance", "B R O K E R  Daniela  Mora  Escarate", "Rodman Kephart", "Broker - Italo Catenacci", "Gabriel Fernández", "Sebastian Risco Rodriguez", "Francisca Vial", "Patricia Ceron Gamboa", "Cinthia Morales", "Maria Fernanda Medina Roa TEAM YOORDLIS", "Maria Poblete", "Alejandro Jerez", "Jorge Irarrázaval Trigo", "Ximena Figueroa", "Carlo Casorzo Casorzo", "Eloisa Castillo", "Pilar Soto Fernandez", "Juan Munoz", "Karla Muñoz Lepin", "Victoria Osses", "Gabriela Sarmiento"], "propiedades_def": [{"id": "1028004033-121", "p": 16, "c": 97}, {"id": "1028004044-103", "p": 17, "c": 103}, {"id": "1028004040-74", "p": 18, "c": 136}, {"id": "1028108058-46", "p": 28, "c": 219}, {"id": "1028004005-556", "p": 28, "c": 178}, {"id": "1028018114-575", "p": 13, "c": 87}, {"id": "1028116003-31", "p": 21, "c": 142}, {"id": "1028108058-72", "p": 27, "c": 168}, {"id": "1028004044-102", "p": 20, "c": 147}, {"id": "1028004044-65", "p": 28, "c": 159}]},
+  google: {
+    gsc: {
+      "periodo": "09 mar – 08 jun 2026",
+      "clicks": 81840, "impressions": 1788358, "ctr": 4.58, "position": 7.66,
+      "conclusiones": [
+        "En la segunda mitad del período las impresiones subieron (858.387 → 929.971) pero el CTR bajó (4,81% → 4,36%) y la posición promedio empeoró (7,38 → 7,92): el sitio gana visibilidad pero pierde posiciones, una señal de alerta de cara a los próximos meses.",
+        "La home (remax.cl) concentra 23.118 clics —con gran diferencia la página más visitada— pero su posición promedio es 13,07, sorprendentemente baja para ser la página principal del sitio.",
+        "Las consultas de marca (\"remax\", \"remax chile\", \"remax + nombre de oficina\") dominan el top de queries con CTR muy altos (50-77%) y posiciones excelentes (1,2-4,2), lo que confirma fuerte reconocimiento de marca.",
+        "Las consultas genéricas/transaccionales (ej. \"arriendo departamento\") rankean mucho peor (posición ~5,5-7,4) con CTR bajo (~1,4-2,8%): hay una oportunidad clara de optimizar contenido para intención de búsqueda no asociada a la marca.",
+        "Mobile genera más clics que desktop (49.880 vs 31.328), pero desktop convierte mejor en CTR (5,06% vs 4,31%) — revisar experiencia mobile.",
+        "Más del 99% de clics e impresiones provienen de Chile; el resto (EE.UU., Argentina, Brasil, España) es marginal."
+      ],
+      "top_paginas": [
+        {"pagina": "remax.cl (home)", "clics": 23118, "impresiones": "—", "ctr": "—", "pos": 13.07}
+      ],
+      "top_queries": [
+        {"query": "remax", "clics": "alto", "impresiones": "alto", "ctr": "50-77%", "pos": "1,2-4,2 (rango marca)"},
+        {"query": "arriendo departamento", "clics": "bajo", "impresiones": "medio", "ctr": "1,4-2,8%", "pos": "5,5-7,4 (rango genérico)"}
+      ]
+    },
+    ga: {
+      "periodo": "12 mar – 09 jun 2026 (90 días)",
+      "activos": 208000, "nuevos": 200000,
+      "canales_sesiones": [
+        {"canal": "Direct", "sesiones": 240000, "nuevos": 112000},
+        {"canal": "Organic Search", "sesiones": 152000, "nuevos": 52000},
+        {"canal": "Referral", "sesiones": 32000, "nuevos": 2200},
+        {"canal": "Organic Social", "sesiones": 26000, "nuevos": 20000},
+        {"canal": "Paid Social", "sesiones": 13000, "nuevos": 12000},
+        {"canal": "Unassigned", "sesiones": 9900, "nuevos": 172},
+        {"canal": "Paid Search", "sesiones": 888, "nuevos": 753}
+      ],
+      "fuentes_manuales": [
+        {"fuente": "google", "sesiones": 148000},
+        {"fuente": "iconnect10.gryphtech...", "sesiones": 20000},
+        {"fuente": "ig", "sesiones": 16000},
+        {"fuente": "facebook.com", "sesiones": 6300},
+        {"fuente": "l.wl.co", "sesiones": 5300},
+        {"fuente": "m.facebook.com", "sesiones": 4900},
+        {"fuente": "fb", "sesiones": 4000}
+      ],
+      "conclusiones": [
+        "Organic Search es el 2do canal en sesiones (152K, ~19% del total) y 2do en usuarios nuevos (52K): la inversión en SEO está aportando una porción relevante del tráfico, en línea con lo visto en Search Console.",
+        "Direct domina ampliamente (240K sesiones, 112K usuarios nuevos / 64% del total de sesiones): puede incluir tráfico mal etiquetado (apps, links acortados, campañas sin UTM), conviene auditar el etiquetado de campañas.",
+        "Paid Search es prácticamente nulo (888 sesiones) y el widget de \"Campaña de Google Ads\" no muestra datos: no hay inversión activa en Google Ads, o las campañas no están vinculadas a GA4 — revisar si esto es intencional.",
+        "Paid Social (13K sesiones) genera 12K usuarios nuevos, una tasa de conversión a usuario nuevo muy alta (~92%): la pauta paga en redes sociales está siendo eficiente para captar audiencia nueva.",
+        "Entre las fuentes manuales, 'iconnect10.gryphtech...' (probable integración de portales/CRM de listados) es la 2da fuente de sesiones (20K) después de google (148K) — vale la pena confirmar qué es exactamente y si está bien atribuida.",
+        "Instagram (ig, facebook.com, m.facebook.com, fb combinados ≈ 31K sesiones) es una fuente social relevante, consistente con Organic Social (26K) + Paid Social (13K)."
+      ]
+    }
+  }
+};
+
+function scoreClass(s) {
+  if (s >= 70) return 'good';
+  if (s >= 50) return 'mid';
+  return 'bad';
+}
+function defBadge(p, minP, minC, c) {
+  if (p === 0 && c === 0) return '<span class="badge bad">sin descripción</span>';
+  if (p < minP || c < minC) return '<span class="badge mid">⚠ deficiente</span>';
+  return '<span class="badge good">✓ OK</span>';
+}
+function fmt(n) { return Number(n).toLocaleString('es-CL'); }
+
+function render() {
+  document.getElementById('web-fecha').textContent = DATA.web.fecha;
+  ['seo_audit','technical_seo','ai_visibility'].forEach(k => {
+    const d = DATA.web[k];
+    const el = document.getElementById('score-'+k);
+    el.textContent = d.score + '/100';
+    el.className = 'score ' + scoreClass(d.score);
+    document.getElementById('resumen-'+k).textContent = d.resumen;
+    ['criticos','advertencias','positivos'].forEach(g => {
+      const ul = document.getElementById(g+'-'+k);
+      ul.innerHTML = '';
+      (d[g]||[]).forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+    });
+  });
+
+  // iList - Offices (all, sorted by chars desc)
+  const tblOf = document.getElementById('tbl-oficinas');
+  const sortedOfs = [...DATA.ilist.oficinas].sort((a,b) => b.c - a.c);
+  sortedOfs.forEach(o => {
+    const tr = document.createElement('tr');
+    const isDef = o.c < 600;
+    if (isDef) tr.style.background = '#fff5f5';
+    tr.innerHTML = `<td>${o.n}</td><td>${o.p}</td><td>${o.c}</td><td>${defBadge(o.p, 0, 600, o.c)}</td>`;
+    tblOf.appendChild(tr);
+  });
+
+  // iList - Zero agents sample
+  const tblWA = document.getElementById('tbl-worst-agentes');
+  DATA.ilist.zero_agentes.slice(0, 20).forEach(name => {
+    const tr = document.createElement('tr');
+    tr.style.background = '#fff5f5';
+    tr.innerHTML = `<td>${name}</td><td>0</td><td>0</td><td><span class="badge bad">sin descripción</span></td>`;
+    tblWA.appendChild(tr);
+  });
+  const trMore = document.createElement('tr');
+  trMore.innerHTML = `<td colspan="4" style="color:#888;font-style:italic;font-size:13px">… y ${726 - DATA.ilist.zero_agentes.length} agentes más con descripción deficiente (< 600 car). Ver Excel completo.</td>`;
+  tblWA.appendChild(trMore);
+
+  // iList - Deficient properties
+  const tblProp = document.getElementById('tbl-propiedades');
+  DATA.ilist.propiedades_def.forEach(dl => {
+    const tr = document.createElement('tr');
+    tr.style.background = '#fff5f5';
+    const url = `https://www.remax.cl/${dl.id}`;
+    tr.innerHTML = `<td>${dl.id}</td><td>${dl.p}</td><td>${dl.c}</td><td><a href="${url}" target="_blank" style="color:#0043ff;font-size:12px">${url}</a></td><td>${defBadge(dl.p, 0, 590, dl.c)}</td>`;
+    tblProp.appendChild(tr);
+  });
+
+  // Note for property table
+  const tblPropNote = document.getElementById('tbl-propiedades');
+  if (tblPropNote) {
+    const trN = document.createElement('tr');
+    trN.innerHTML = `<td colspan="5" style="color:#888;font-style:italic;font-size:13px">… y 0 propiedades más. Lista completa en <em>ilist_resultados_2026-06-30.xlsx</em>.</td>`;
+    tblPropNote.appendChild(trN);
+  }
+
+  // Google
+  const gsc = DATA.google.gsc;
+  const ga = DATA.google.ga;
+  document.getElementById('gsc-periodo').textContent = gsc.periodo;
+  document.getElementById('ga-periodo').textContent = ga.periodo;
+  document.getElementById('gsc-clicks').textContent = fmt(gsc.clicks);
+  document.getElementById('gsc-impressions').textContent = fmt(gsc.impressions);
+  document.getElementById('gsc-ctr').textContent = gsc.ctr.toFixed(2) + '%';
+  document.getElementById('gsc-pos').textContent = gsc.position.toFixed(2);
+
+  const gscUl = document.getElementById('gsc-conclusiones');
+  gsc.conclusiones.forEach(c => {
+    const li = document.createElement('li'); li.textContent = c; gscUl.appendChild(li);
+  });
+
+  const tblPag = document.getElementById('tbl-gsc-paginas');
+  gsc.top_paginas.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${p.pagina}</td><td>${typeof p.clics==='number'?fmt(p.clics):p.clics}</td><td>${typeof p.impresiones==='number'?fmt(p.impresiones):p.impresiones}</td><td>${p.ctr}</td><td>${p.pos}</td>`;
+    tblPag.appendChild(tr);
+  });
+
+  const tblQ = document.getElementById('tbl-gsc-queries');
+  gsc.top_queries.forEach(q => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${q.query}</td><td>${q.clics}</td><td>${q.impresiones}</td><td>${q.ctr}</td><td>${q.pos}</td>`;
+    tblQ.appendChild(tr);
+  });
+
+  document.getElementById('ga-activos').textContent = fmt(ga.activos);
+  document.getElementById('ga-nuevos').textContent = fmt(ga.nuevos);
+
+  const gaUl = document.getElementById('ga-conclusiones');
+  ga.conclusiones.forEach(c => {
+    const li = document.createElement('li'); li.textContent = c; gaUl.appendChild(li);
+  });
+
+  const tblCanales = document.getElementById('tbl-ga-canales');
+  ga.canales_sesiones.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${c.canal}</td><td>${fmt(c.sesiones)}</td><td>${fmt(c.nuevos)}</td>`;
+    tblCanales.appendChild(tr);
+  });
+
+  const tblFuentes = document.getElementById('tbl-ga-fuentes');
+  ga.fuentes_manuales.forEach(f => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${f.fuente}</td><td>${fmt(f.sesiones)}</td>`;
+    tblFuentes.appendChild(tr);
+  });
+}
+
+let _chartInstances = {};
+function showTab(tab) {
+  ['web','ilist','google','tendencias'].forEach(t => {
+    document.getElementById(t).classList.toggle('active', t===tab);
+    const btn = document.getElementById('btn-'+t);
+    if (btn) btn.classList.toggle('active', t===tab);
+  });
+  if (tab==='web') hideDetails();
+  if (tab==='tendencias') { renderTendencias(); }
+}
+function showDetail(key) {
+  document.querySelectorAll('#web .cards').forEach(c=>c.style.display='none');
+  document.querySelectorAll('#web .detail').forEach(d=>d.classList.remove('active'));
+  document.getElementById('detail-'+key).classList.add('active');
+  document.querySelector('#web .update-info').style.display='none';
+}
+function hideDetails() {
+  document.querySelectorAll('#web .detail').forEach(d=>d.classList.remove('active'));
+  document.querySelectorAll('#web .cards').forEach(c=>c.style.display='');
+  document.querySelector('#web .update-info').style.display='';
+}
+
+// ── Snapshots históricos ─────────────────────────────────────────────────────
+const SNAPSHOTS = [
+  {
+    "fecha": "2026-06-22",
+    "label": "Jun 2026",
+    "ilist": {
+      "agentes": {
+        "total": 1087,
+        "def": 730,
+        "pct": 67.2
+      },
+      "oficinas": {
+        "total": 49,
+        "def": 24,
+        "pct": 49.0
+      },
+      "propiedades": {
+        "total": 9133,
+        "def": 588,
+        "pct": 6.4
+      }
+    },
+    "web": {
+      "seo_audit": 52,
+      "technical_seo": 45,
+      "ai_visibility": 48
+    },
+    "gsc": {
+      "clicks": 81840,
+      "impressions": 1788358,
+      "ctr": 4.58,
+      "position": 7.66
+    }
+  },
+  {
+    "fecha": "2026-06-23",
+    "label": "Jun 2026 S1",
+    "ilist": {
+      "agentes": {
+        "total": 1087,
+        "def": 730,
+        "pct": 67.2
+      },
+      "oficinas": {
+        "total": 49,
+        "def": 24,
+        "pct": 49.0
+      },
+      "propiedades": {
+        "total": 9133,
+        "def": 588,
+        "pct": 6.4
+      }
+    },
+    "web": {
+      "seo_audit": 52,
+      "technical_seo": 45,
+      "ai_visibility": 48
+    },
+    "gsc": {
+      "clicks": 81840,
+      "impressions": 1788358,
+      "ctr": 4.58,
+      "position": 7.66
+    }
+  }
+,
+  {
+    "fecha": "2026-06-30",
+    "label": "Jun 2026 S2",
+    "ilist": {
+      "agentes": {
+        "total": 1076,
+        "def": 726,
+        "pct": 67.5
+      },
+      "oficinas": {
+        "total": 51,
+        "def": 26,
+        "pct": 51.0
+      },
+      "propiedades": {
+        "total": 8547,
+        "def": 10,
+        "pct": 0.12
+      }
+    },
+    "web": {
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    "gsc": {
+      "clicks": 81840,
+      "impressions": 1788358,
+      "ctr": 4.58,
+      "position": 7.66
+    }
+  }
+];
+
+function renderTendencias() {
+  // Destroy existing chart instances to allow re-render
+  Object.values(_chartInstances).forEach(c => { try { c.destroy(); } catch(e){} });
+  _chartInstances = {};
+
+  const labels  = SNAPSHOTS.map(s => s.label);
+  const snap_n  = SNAPSHOTS.length;
+  document.getElementById('snap-count').textContent =
+    snap_n + ' revisión' + (snap_n !== 1 ? 'es' : '');
+
+  // Snapshot nav pills
+  const nav = document.getElementById('snapshot-nav');
+  nav.innerHTML = SNAPSHOTS.map((s,i) =>
+    `<span class="snap-pill" title="${s.fecha}">${s.label}</span>`
+  ).join('');
+
+  const pointR = snap_n === 1 ? 8 : 4;
+  const tension = 0.3;
+  const gridColor = 'rgba(0,0,0,0.06)';
+  const commonOpts = {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
+    scales: {
+      x: { grid: { color: gridColor } },
+      y: { grid: { color: gridColor }, beginAtZero: false }
+    }
+  };
+
+  // Chart 1: iList % deficientes
+  _chartInstances['chart-ilist-pct'] = new Chart(document.getElementById('chart-ilist-pct'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Agentes %',      data: SNAPSHOTS.map(s=>s.ilist.agentes.pct),
+           borderColor:'#0043ff', backgroundColor:'rgba(0,67,255,0.08)', pointRadius:pointR, tension },
+        { label: 'Oficinas %',     data: SNAPSHOTS.map(s=>s.ilist.oficinas.pct),
+           borderColor:'#b8780a', backgroundColor:'rgba(184,120,10,0.08)', pointRadius:pointR, tension },
+        { label: 'Propiedades %',  data: SNAPSHOTS.map(s=>s.ilist.propiedades.pct),
+           borderColor:'#1f7a3a', backgroundColor:'rgba(31,122,58,0.08)', pointRadius:pointR, tension }
+      ]
+    },
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { ...commonOpts.scales.y, title: { display:true, text:'% deficientes' } } } }
+  });
+
+  // Chart 2: iList absolutos
+  _chartInstances['chart-ilist-abs'] = new Chart(document.getElementById('chart-ilist-abs'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Agentes def.',      data: SNAPSHOTS.map(s=>s.ilist.agentes.def),
+           borderColor:'#0043ff', backgroundColor:'rgba(0,67,255,0.08)', pointRadius:pointR, tension },
+        { label: 'Oficinas def.',     data: SNAPSHOTS.map(s=>s.ilist.oficinas.def),
+           borderColor:'#b8780a', backgroundColor:'rgba(184,120,10,0.08)', pointRadius:pointR, tension },
+        { label: 'Propiedades def.',  data: SNAPSHOTS.map(s=>s.ilist.propiedades.def),
+           borderColor:'#1f7a3a', backgroundColor:'rgba(31,122,58,0.08)', pointRadius:pointR, tension }
+      ]
+    },
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { ...commonOpts.scales.y, title: { display:true, text:'# deficientes' } } } }
+  });
+
+  // Chart 3: Web scores
+  _chartInstances['chart-web-scores'] = new Chart(document.getElementById('chart-web-scores'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'SEO Audit',      data: SNAPSHOTS.map(s=>s.web.seo_audit),
+           borderColor:'#0043ff', backgroundColor:'rgba(0,67,255,0.08)', pointRadius:pointR, tension },
+        { label: 'Technical SEO',  data: SNAPSHOTS.map(s=>s.web.technical_seo),
+           borderColor:'#b8780a', backgroundColor:'rgba(184,120,10,0.08)', pointRadius:pointR, tension },
+        { label: 'AI Visibility',  data: SNAPSHOTS.map(s=>s.web.ai_visibility),
+           borderColor:'#1f7a3a', backgroundColor:'rgba(31,122,58,0.08)', pointRadius:pointR, tension }
+      ]
+    },
+    options: { ...commonOpts, scales: { ...commonOpts.scales,
+      y: { min:0, max:100, grid:{ color:gridColor }, title:{ display:true, text:'Score /100' } } } }
+  });
+
+  // Chart 4: GSC clicks + impressions
+  _chartInstances['chart-gsc'] = new Chart(document.getElementById('chart-gsc'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Clics',       data: SNAPSHOTS.map(s=>s.gsc.clicks),
+           borderColor:'#0043ff', backgroundColor:'rgba(0,67,255,0.08)', pointRadius:pointR, tension, yAxisID:'y' },
+        { label: 'Impresiones', data: SNAPSHOTS.map(s=>s.gsc.impressions),
+           borderColor:'#aab0c7', backgroundColor:'rgba(170,176,199,0.08)', pointRadius:pointR, tension, yAxisID:'y2' }
+      ]
+    },
+    options: { ...commonOpts,
+      scales: {
+        x: { grid:{ color:gridColor } },
+        y:  { position:'left',  grid:{ color:gridColor }, title:{ display:true, text:'Clics' } },
+        y2: { position:'right', grid:{ drawOnChartArea:false }, title:{ display:true, text:'Impresiones' } }
+      }
+    }
+  });
+
+  // Chart 5: CTR + Position
+  _chartInstances['chart-gsc2'] = new Chart(document.getElementById('chart-gsc2'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'CTR (%)',           data: SNAPSHOTS.map(s=>s.gsc.ctr),
+           borderColor:'#0043ff', backgroundColor:'rgba(0,67,255,0.08)', pointRadius:pointR, tension, yAxisID:'y' },
+        { label: 'Posición promedio', data: SNAPSHOTS.map(s=>s.gsc.position),
+           borderColor:'#ff1200', backgroundColor:'rgba(255,18,0,0.08)', pointRadius:pointR, tension, yAxisID:'y2' }
+      ]
+    },
+    options: { ...commonOpts,
+      scales: {
+        x: { grid:{ color:gridColor } },
+        y:  { position:'left',  grid:{ color:gridColor }, title:{ display:true, text:'CTR %' } },
+        y2: { position:'right', grid:{ drawOnChartArea:false }, title:{ display:true, text:'Posición (menor=mejor)' }, reverse:true }
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', render);
+</script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

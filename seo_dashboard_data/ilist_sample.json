@@ -1,0 +1,44 @@
+{
+  "fecha_muestra": "2026-06-30",
+  "metodologia": "Datos obtenidos vía Azure Cognitive Search API de remax.cl (listing-search, agent-search, office-search). Campos de descripción: Slogan+Closer+BulletPoint1/2/3 (agentes); Slogan+OfficeDescription+Closer+BulletPoint1/2/3 (oficinas); ListingDescriptions[*] — descripción más larga entre todos los índices (propiedades). HTML decodificado y contado. IMPORTANTE: la paginación del API es inestable; toda propiedad deficiente se verifica individualmente con consulta directa por MLS ID.",
+  "promedios": {
+    "agentes": {
+      "palabras": 60,
+      "caracteres": 411
+    },
+    "oficinas": {
+      "palabras": 101,
+      "caracteres": 683
+    },
+    "propiedades": {
+      "palabras": 226,
+      "caracteres": 1477
+    }
+  },
+  "totales": {
+    "agentes_activos": 1076,
+    "agentes_deficientes": 726,
+    "agentes_pct_deficiente": 67.5,
+    "oficinas_activas": 51,
+    "oficinas_deficientes": 26,
+    "oficinas_pct_deficiente": 51.0,
+    "propiedades_activas": 8547,
+    "propiedades_deficientes": 10,
+    "propiedades_pct_deficiente": 0.12
+  },
+  "umbrales": {
+    "agente_min_chars": 600,
+    "oficina_min_chars": 600,
+    "propiedad_min_chars": 590
+  },
+  "fuente_excel": {
+    "agentes": "OurAgents (16).xls",
+    "oficinas": "OurOffices (6).xls",
+    "propiedades": "OurProperties (64).xls"
+  },
+  "notas_exclusion": [
+    "Agentes con estado Inactivo excluidos del informe",
+    "Propiedades con 0 palabras y 0 caracteres excluidas (links inválidos)",
+    "Propiedades sin datos en API excluidas"
+  ]
+}
