@@ -39,6 +39,4 @@
   "notas_exclusion": [
     "Agentes con estado Inactivo excluidos del informe",
     "Propiedades con 0 palabras y 0 caracteres excluidas (links inválidos)",
-    "Propiedades sin datos en API excluidas"
-  ]
-}
+    "Prop

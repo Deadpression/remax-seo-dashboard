@@ -1,11 +1,4 @@
-<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Seo Dashboard Remax",
-  "schemaVersion": 1,
-  "description": "Dashboard de seguimiento SEO de REMAX Chile: scores semanales de SEO Audit, Technical SEO y AI Visibility (sección Web) y conteo de palabras/caracteres en descripciones de Agentes, Oficinas y Propiedades vía API (sección iList)."
-}
-</script>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta name="robots" content="noindex, nofollow">
 <meta charset="UTF-8">
@@ -156,53 +149,53 @@ h2.section-title:first-child { margin-top: 0; }
 
   <!-- ILIST SECTION -->
   <section id="ilist" class="section">
-    <div class="update-info">Análisis completo vía API: <strong>2026-06-22</strong> · 1087 agentes + 49 oficinas + 9133 propiedades · Próximo refresco: automático lunes 9:00 AM</div>
+    <div class="update-info">Análisis completo vía API: <strong>2026-06-30</strong> · 1076 agentes + 51 oficinas + 8547 propiedades · Próximo refresco: automático lunes 9:00 AM</div>
 
     <div class="ilist-grid">
       <div class="ilist-card">
         <h3>🏢 Oficinas</h3>
-        <div class="big-pct warn">49%</div>
-        <div class="sub">deficientes (24 de 49)</div>
+        <div class="big-pct warn">51%</div>
+        <div class="sub">deficientes (26 de 51)</div>
         <div class="avgs">Umbral mínimo: 600 car</div>
       </div>
       <div class="ilist-card">
         <h3>👤 Agentes</h3>
-        <div class="big-pct warn">67%</div>
-        <div class="sub">deficientes (730 de 1087 activos)</div>
+        <div class="big-pct warn">68%</div>
+        <div class="sub">deficientes (726 de 1076 activos)</div>
         <div class="avgs">Umbral mínimo: 600 car</div>
       </div>
       <div class="ilist-card">
         <h3>🏠 Propiedades</h3>
-        <div class="big-pct warn">9.1%</div>
-        <div class="sub">deficientes (856 de 9401 activas)</div>
+        <div class="big-pct good">0.12%</div>
+        <div class="sub">deficientes en Excel (10 de 8547)</div>
         <div class="avgs">Umbral mínimo: 590 car</div>
       </div>
     </div>
 
     <h2 class="section-title">Oficinas — Detalle (prioridad alta)</h2>
-    <p style="font-size:13px;color:#666;margin-top:-4px">32 de 49 oficinas no alcanzan el umbral mínimo de 1.000 caracteres. Ordenadas de mayor a menor contenido.</p>
+    <p style="font-size:13px;color:#666;margin-top:-4px">26 de 51 oficinas no alcanzan el umbral mínimo (600 caracteres). Ordenadas de mayor a menor contenido.</p>
     <table>
       <thead><tr><th>Oficina</th><th>Palabras</th><th>Caracteres</th><th>Estado</th></tr></thead>
       <tbody id="tbl-oficinas"></tbody>
     </table>
 
-    <h2 class="section-title" style="margin-top:32px">Agentes — Peores perfiles (sin descripción)</h2>
-    <p style="font-size:13px;color:#666;margin-top:-4px">Agentes con 0 palabras en bio. Detalle completo en <em>ilist_resultados_2026-06-22.xlsx</em>.</p>
+    <h2 class="section-title" style="margin-top:32px">Agentes — Perfiles sin descripción</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">Agentes con 0 palabras en bio. Detalle completo en <em>ilist_resultados_2026-06-30.xlsx</em>.</p>
     <table>
       <thead><tr><th>Nombre</th><th>Palabras</th><th>Caracteres</th><th>Estado</th></tr></thead>
       <tbody id="tbl-worst-agentes"></tbody>
     </table>
 
-    <h2 class="section-title" style="margin-top:32px">Propiedades — Deficientes (588 casos)</h2>
-    <p style="font-size:13px;color:#666;margin-top:-4px">588 de 9133 propiedades tienen menos de 590 caracteres en su descripción. Se muestran las 30 peores. Ver Excel para lista completa.</p>
+    <h2 class="section-title" style="margin-top:32px">Propiedades — Deficientes (10 casos en Excel)</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">10 de 8547 propiedades activas en Excel tienen descripción deficiente (&lt;30 palabras o &lt;150 caracteres). Ver Excel para detalle.</p>
     <table>
       <thead><tr><th>MLS ID</th><th>Palabras</th><th>Caracteres</th><th>URL</th><th>Estado</th></tr></thead>
       <tbody id="tbl-propiedades"></tbody>
     </table>
 
     <div class="note" style="margin-top:24px">
-      <strong>Metodología 2026-06-22 (nueva):</strong> Datos obtenidos directamente de la API de búsqueda de remax.cl (Azure Cognitive Search). Campos medidos: Slogan + Closer + BulletPoint1/2/3 para agentes y oficinas; ListingDescriptions (descripción más larga entre todos los índices) para propiedades. HTML decodificado antes de contar. Universo completo: sin muestreo.<br><br>
-      <strong>Archivo Excel:</strong> <em>ilist_resultados_2026-06-22.xlsx</em> (carpeta "Revisión SEO dashboard") contiene tablas completas con estado ✓/⚠ por entidad.
+      <strong>Metodología 2026-06-30:</strong> Datos obtenidos directamente de la API de búsqueda de remax.cl (Azure Cognitive Search). Campos medidos: Slogan + Closer + BulletPoint1/2/3 para agentes y oficinas; ListingDescriptions (descripción más larga entre todos los índices) para propiedades. HTML decodificado antes de contar. Universo completo: sin muestreo. Umbrales: Agentes ≥600 car; Oficinas ≥600 car; Propiedades ≥590 car.<br><br>
+      <strong>Archivo Excel:</strong> <em>ilist_resultados_2026-06-30.xlsx</em> (carpeta "Revisión SEO dashboard") contiene tablas completas con estado ✓/⚠ por entidad.
     </div>
   </section>
 
@@ -308,109 +301,8 @@ h2.section-title:first-child { margin-top: 0; }
 
 <script>
 const DATA = {
-  web: {"fecha": "2026-06-17", "dominio": "remax.cl", "seo_audit": {"score": 52, "resumen": "Datos reales via Chrome confirmaron: title \"Home\" en homepage (crítico), sin H1, sin canonical ni OG tags. Property pages con título de región en vez de propiedad y doble H1. Positivos: meta desc buena, lang=es-CL, Organization+WebSite schema y lazy loading parcial.", "criticos": ["Title tag homepage es \"Home\" — no describe el sitio ni contiene keywords", "Sin H1 en la página de inicio", "Páginas de propiedades tienen título de guía de región en vez del título de la propiedad", "Doble H1 en páginas de propiedades (propiedad + región)", "Sin RealEstateListing schema en páginas de propiedades", "Sin canonical tags en ninguna página revisada", "Sin Open Graph (og:title, og:image) en homepage"], "advertencias": ["8 de 22 imágenes sin atributo alt en homepage (36%)", "17 de 66 imágenes sin alt en páginas de propiedades (26%)", "Lazy loading solo en 9/22 imágenes homepage — no es universal", "Meta description de property page describe la región, no la propiedad"], "positivos": ["Meta description homepage completa y descriptiva (in Spanish)", "lang=\"es-CL\" correctamente declarado", "Organization + WebSite schema presentes con buena estructura", "HTTPS con redirect correcto", "robots.txt completo con whitelist para Google, Bing, GPTBot, ClaudeBot", "Breadcrumb visible en páginas de propiedades"]}, "technical_seo": {"score": 45, "resumen": "Mejoras confirmadas vía Chrome: lang=es-CL correcto, lazy loading implementado parcialmente, schema Organization/WebSite presente. Pendiente: canonical URLs ausentes, título \"Home\", property pages con template incorrecto y Core Web Vitals no verificados.", "criticos": ["Sin canonical URLs en ninguna página — riesgo de contenido duplicado a escala", "Title \"Home\" — afecta CTR en buscadores y señales de relevancia", "Property pages con título de región — error de template que afecta las 9.000+ propiedades", "Sin RealEstateListing schema — oportunidad perdida de rich results"], "advertencias": ["Lazy loading no universal — solo 9/22 imágenes en homepage", "Core Web Vitals no verificados — SPA puede tener LCP alto por fetch a Azure Search", "Sitemap sin directiva en robots.txt", "Sin Open Graph — afecta sharing en redes sociales"], "positivos": ["HTTPS con redirect correcto (remax.cl → www.remax.cl)", "lang=\"es-CL\" correctamente declarado en páginas internas", "robots.txt con whitelist explícita y bien configurado", "Lazy loading implementado en galerías de propiedades (37/66)", "Organization + WebSite schema con SearchAction (sitelinks search box)"]}, "ai_visibility": {"score": 48, "resumen": "Datos reales revelan Organization schema con descripción extensa y de alta calidad (1.100 agentes, 50 oficinas, premios 2025, regiones). WebSite schema con SearchAction presente. GPTBot y ClaudeBot explícitamente permitidos. Faltan FAQ schema y RealEstateListing para que propiedades sean citadas por LLMs.", "criticos": ["Sin FAQPage schema — preguntas de compradores/vendedores no aparecen en respuestas de IA", "Property pages solo tienen Organization schema mínimo — sin RealEstateListing", "Contenido de propiedades renderizado por JS — LLMs ven HTML vacío al rastrear"], "advertencias": ["Sin speakable schema para asistentes de voz", "Guías de área con potencial de citación alta pero sin estructura semántica adicional", "Wildcard Disallow *AI* puede bloquear rastreadores emergentes no whitelisted"], "positivos": ["Organization schema con descripción detallada: 1.100 agentes, 50 oficinas, premios RE/MAX 2025", "WebSite schema con SearchAction — habilita sitelinks search box", "GPTBot, ClaudeBot y Applebot-Extended explícitamente permitidos en robots.txt", "Marca RE/MAX reconocida globalmente — entidad bien establecida en modelos de IA", "Descripción de WebSite schema muy completa (historia, servicios, cobertura geográfica)"]}},
-  ilist: {
-    fecha: "2026-06-22",
-    oficinas: [
-      {n:"RE/MAX - SYNERGY", p:594, c:3980},
-      {n:"RE/MAX - CORDILLERA", p:267, c:1720},
-      {n:"RE/MAX - AGORA", p:259, c:1672},
-      {n:"RE/MAX - SUPREME", p:242, c:1725},
-      {n:"RE/MAX - SYNERGY II", p:237, c:1518},
-      {n:"RE/MAX - ADVANCE", p:199, c:1231},
-      {n:"RE/MAX - ABSOLUTE", p:192, c:1293},
-      {n:"RE/MAX - PREMIER", p:191, c:1256},
-      {n:"RE/MAX - CAPITAL", p:190, c:1272},
-      {n:"RE/MAX - EXCLUSIVE", p:186, c:1263},
-      {n:"RE/MAX - FIRST", p:188, c:1205},
-      {n:"RE/MAX - ABSOLUTE II", p:183, c:1221},
-      {n:"RE/MAX - PASSION", p:179, c:1336},
-      {n:"RE/MAX - SILVER", p:170, c:1326},
-      {n:"RE/MAX - SUMMIT", p:163, c:1015},
-      {n:"RE/MAX - ENLACE", p:152, c:1018},
-      {n:"RE/MAX - REALTY", p:101, c:749},
-      {n:"RE/MAX - CENTRAL", p:108, c:704},
-      {n:"RE/MAX - OESTE", p:105, c:700},
-      {n:"RE/MAX - FUTURO", p:105, c:816},
-      {n:"RE/MAX - EXTRA", p:120, c:773},
-      {n:"RE/MAX - ACCION", p:112, c:709},
-      {n:"RE/MAX - TITANIO", p:223, c:1495},
-      {n:"RE/MAX - BOSQUES", p:96, c:661},
-      {n:"RE/MAX - FAMILY", p:91, c:625},
-      {n:"RE/MAX - CONTIGO", p:80, c:596},
-      {n:"RE/MAX - ICON", p:82, c:570},
-      {n:"RE/MAX - BURÓ", p:78, c:562},
-      {n:"RE/MAX - SELECT", p:76, c:487},
-      {n:"RE/MAX - COSTANERA", p:51, c:368},
-      {n:"RE/MAX - ECOPARTNERS", p:46, c:308},
-      {n:"RE/MAX - INNOVA", p:47, c:318},
-      {n:"RE/MAX - URBANO", p:50, c:310},
-      {n:"TRAINING OFFICE", p:17, c:119},
-      {n:"RE/MAX - TRUE HOME", p:5, c:31},
-      {n:"RE/MAX - NEXUS", p:0, c:0},
-      {n:"RE/MAX - SPIRIT", p:0, c:0},
-      {n:"RE/MAX - ELITE", p:0, c:0},
-      {n:"RE/MAX - CUMBRE", p:0, c:0},
-      {n:"RE/MAX - AVENTUS", p:0, c:0},
-      {n:"RE/MAX - REALTY II", p:0, c:0},
-      {n:"RE/MAX - PRINCIPAL", p:0, c:0},
-      {n:"RE/MAX - REAL HOME", p:0, c:0},
-      {n:"RE/MAX - SOLUTIONS", p:0, c:0},
-      {n:"RE/MAX - LOS RÍOS", p:0, c:0},
-      {n:"RE/MAX - START", p:0, c:0},
-      {n:"RE/MAX - GOLDEN", p:0, c:0},
-      {n:"RE/MAX - ONE", p:0, c:0},
-      {n:"RE/MAX - DIAMANTE", p:0, c:0},
-      {n:"RE/MAX - PRO", p:0, c:0},
-      {n:"RE/MAX - GREENHOUSE", p:0, c:0},
-      {n:"RE/MAX - UNIQUE", p:0, c:0}
-    ],
-    worst_agentes: [
-      {n:"BROKER Hernan Andrade", p:221, c:1518},
-      {n:"Guillermo Rodriguez Aguilera", p:285, c:1819},
-      {n:"Gerardo Porteous", p:287, c:1789},
-      {n:"Ana Orellana Del Valle", p:208, c:1388},
-      {n:"Oscar Pescetto Jerez", p:246, c:1597},
-      {n:"Francisco Ferrer", p:246, c:1591},
-      {n:"Ronny Saa Torres", p:227, c:1368},
-      {n:"Aracelly Arancibia Aliste", p:235, c:1458},
-      {n:"Carolina Layseca", p:199, c:1263},
-      {n:"Guido Flores Santander", p:199, c:1301}
-    ],
-    zero_agentes: ["Jorge  Luis  Ramirez  Delgado", "Administración  R E M A X  Exclusive", "BROKER Maria Ines Ibacache", "Hugo Knüst", "Maria Jose Orrego", "Carolina Gil Lajaña", "Bastian Zimmermann", "Natalia Knust", "Daniela Aguilar", "Juan Pino Vera", "Juan Esteban Leon", "Leslie Olivares", "Laura Huenupe", "Patricia Figueroa", "Carla Ruiz", "Alejandra Garrido Inostroza", "Mariadela Pavez", "Tatiana Tapia", "Julien Delard Pizarro", "Paulina Ruiz", "Javier Micin", "Esteban Becerra", "Cristal Mendoza Pinto", "Trinidad Fernandez", "Cristian Morales", "Adriana Avendaño Sanchez", "Jose Luis Vargas", "Flor Rojas", "Cristian López", "Pia Ramirez"],
-    propiedades_def: [
-      {id:"1028004005-557", p:59, c:374},
-      {id:"1028004005-564", p:60, c:408},
-      {id:"1028004005-559", p:59, c:352},
-      {id:"1028004005-566", p:45, c:309},
-      {id:"1028004005-558", p:54, c:308},
-      {id:"1028004005-555", p:77, c:465},
-      {id:"1028004005-567", p:56, c:350},
-      {id:"1028004005-556", p:28, c:178},
-      {id:"1028004005-551", p:60, c:407},
-      {id:"1028004005-548", p:62, c:444},
-      {id:"1028004005-544", p:64, c:428},
-      {id:"1028004005-560", p:77, c:513},
-      {id:"1028004005-565", p:76, c:444},
-      {id:"1028004005-554", p:55, c:366},
-      {id:"1028004034-114", p:74, c:514},
-      {id:"1028004034-110", p:73, c:502},
-      {id:"1028004034-118", p:64, c:450},
-      {id:"1028004018-702", p:84, c:564},
-      {id:"1028004018-691", p:64, c:450},
-      {id:"1028004018-689", p:84, c:559},
-      {id:"1028004018-707", p:84, c:450},
-      {id:"1028004018-721", p:94, c:560},
-      {id:"1028004018-701", p:104, c:581},
-      {id:"1028004018-699", p:63, c:371},
-      {id:"1028004018-669", p:32, c:225},
-      {id:"1028004018-720", p:61, c:394},
-      {id:"1028004054-32", p:51, c:378},
-      {id:"1028004049-162", p:75, c:479},
-      {id:"1028004049-156", p:58, c:367},
-      {id:"1028004049-112", p:55, c:316}
-    ]
-  },
+  web: {"fecha": "2026-06-30", "dominio": "remax.cl", "seo_audit": {"score": 67, "resumen": "Mejora importante: el <title> ahora es descriptivo y con keywords ('Propiedades en Venta y Arriendo en Chile | RE/MAX Chile'), y og:title/og:description están presentes en el DOM renderizado. Persisten ausencia de H1, canonical, og:image, Twitter Card y atributo lang vacío.", "criticos": ["Sin H1 en la página de inicio", "Sin <link rel=canonical>", "Atributo lang del <html> está vacío (debería ser 'es' o 'es-CL')", "og:image ausente — perjudica sharing en redes sociales", "Sin Twitter Card meta tags"], "advertencias": ["8 de 22 imágenes sin atributo alt", "og:title y og:description existen en el DOM renderizado, pero NO en el HTML inicial (CSR) — invisible para crawlers sin JS"], "positivos": ["Title optimizado: 'Propiedades en Venta y Arriendo en Chile | RE/MAX Chile' (corregido desde 'Home')", "Meta description completa y descriptiva (>150 caracteres)", "og:title y og:description presentes en DOM renderizado", "Schema Organization + WebSite con SearchAction en JSON-LD", "robots.txt permite crawling general; sitemap.xml indexado con subsitemaps (listings, oficinas, agentes)"]}, "technical_seo": {"score": 45, "resumen": "Sin cambios: el sitio sigue siendo 100% CSR (React). El HTML inicial tiene solo 2.4 KB y cero contenido de texto — todo se inyecta vía JavaScript. Los meta tags, título y schema están ausentes del HTML fuente. La arquitectura CSR continúa siendo el principal problema técnico.", "criticos": ["HTML inicial vacío (2.4 KB, sin SSR/SSG/prerender) — todo el contenido depende de JavaScript", "Title, meta description, og tags y JSON-LD solo existen en DOM renderizado, no en HTML fuente"], "advertencias": ["robots.txt tiene regla 'User-agent: *AI* Disallow: /' que entra en conflicto con permisos explícitos dados a GPTBot, ClaudeBot, etc.", "Verificar Core Web Vitals (LCP/CLS) por el peso de JS necesario para renderizar contenido"], "positivos": ["HTTPS activo", "Meta viewport configurado correctamente para mobile", "sitemap.xml presente con índice de subsitemaps (listings, oficinas, agentes, shortlinks)"]}, "ai_visibility": {"score": 40, "resumen": "Sin cambios estructurales. robots.txt sigue otorgando permisos a los principales bots de IA, pero la arquitectura CSR impide que estos crawlers indexen contenido real. El schema es básico (Organization + WebSite) y no incluye RealEstateListing, lo que limita la comprensión del catálogo por parte de modelos de IA.", "criticos": ["Contenido no disponible para crawlers de IA sin ejecución de JS (arquitectura CSR sin cambios)", "Regla '*AI* Disallow: /' en robots.txt puede bloquear bots de IA genéricos no listados explícitamente"], "advertencias": ["Sin schema RealEstateListing — los modelos de IA no pueden entender el catálogo de propiedades estructuradamente", "Sin datos estructurados de agentes (schema Person/RealEstateAgent)"], "positivos": ["Permisos explícitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot", "Schema Organization y WebSite con SearchAction presentes", "Sitemap estructurado facilita descubrimiento de URLs a crawlers avanzados"]}},
+  ilist: {"fecha": "2026-06-30", "oficinas": [{"n": "RE/MAX - NEXUS", "p": 0, "c": 0}, {"n": "RE/MAX - URBANO", "p": 50, "c": 310}, {"n": "RE/MAX - ABSOLUTE", "p": 192, "c": 1293}, {"n": "RE/MAX - ICON", "p": 82, "c": 570}, {"n": "RE/MAX - ENLACE", "p": 152, "c": 1018}, {"n": "RE/MAX - SPIRIT", "p": 0, "c": 0}, {"n": "RE/MAX - COSTANERA", "p": 51, "c": 368}, {"n": "RE/MAX - ACCION", "p": 112, "c": 709}, {"n": "RE/MAX - FUTURO", "p": 105, "c": 816}, {"n": "RE/MAX - EXTRA", "p": 120, "c": 773}, {"n": "RE/MAX - BURÓ", "p": 78, "c": 562}, {"n": "RE/MAX - PASSION", "p": 179, "c": 1336}, {"n": "RE/MAX - FAMILY", "p": 91, "c": 625}, {"n": "RE/MAX - TITANIO", "p": 223, "c": 1495}, {"n": "RE/MAX - SELECT", "p": 76, "c": 487}, {"n": "RE/MAX - ELITE", "p": 0, "c": 0}, {"n": "RE/MAX - SYNERGY II", "p": 237, "c": 1518}, {"n": "RE/MAX - SILVER", "p": 170, "c": 1326}, {"n": "RE/MAX - EXCLUSIVE", "p": 186, "c": 1263}, {"n": "RE/MAX - CAPITAL", "p": 190, "c": 1272}, {"n": "RE/MAX - CUMBRE", "p": 0, "c": 0}, {"n": "RE/MAX - AVENTUS", "p": 0, "c": 0}, {"n": "RE/MAX - REALTY", "p": 101, "c": 749}, {"n": "RE/MAX - REALTY II", "p": 0, "c": 0}, {"n": "RE/MAX - BOSQUES", "p": 96, "c": 661}, {"n": "RE/MAX - PRINCIPAL", "p": 0, "c": 0}, {"n": "RE/MAX - ADVANCE", "p": 199, "c": 1231}, {"n": "RE/MAX - SUMMIT", "p": 163, "c": 1015}, {"n": "RE/MAX - LOS RÍOS", "p": 0, "c": 0}, {"n": "RE/MAX - PREMIER", "p": 191, "c": 1256}, {"n": "RE/MAX - SYNERGY", "p": 594, "c": 3980}, {"n": "RE/MAX - REAL HOME", "p": 0, "c": 0}, {"n": "RE/MAX - SOLUTIONS", "p": 0, "c": 0}, {"n": "RE/MAX - START", "p": 0, "c": 0}, {"n": "RE/MAX - OESTE", "p": 105, "c": 700}, {"n": "RE/MAX - AGORA", "p": 259, "c": 1672}, {"n": "RE/MAX - GOLDEN", "p": 0, "c": 0}, {"n": "RE/MAX - CENTRAL", "p": 108, "c": 704}, {"n": "RE/MAX - FIRST", "p": 188, "c": 1205}, {"n": "RE/MAX - CORDILLERA", "p": 267, "c": 1720}, {"n": "RE/MAX - ONE", "p": 0, "c": 0}, {"n": "RE/MAX - ECOPARTNERS", "p": 46, "c": 308}, {"n": "RE/MAX - CONTIGO", "p": 80, "c": 596}, {"n": "RE/MAX - ABSOLUTE II", "p": 183, "c": 1221}, {"n": "RE/MAX - SUPREME", "p": 242, "c": 1725}, {"n": "RE/MAX - TRUE HOME", "p": 5, "c": 31}, {"n": "RE/MAX - INNOVA", "p": 47, "c": 318}, {"n": "RE/MAX - DIAMANTE", "p": 0, "c": 0}, {"n": "RE/MAX - GREENHOUSE", "p": 0, "c": 0}, {"n": "RE/MAX - PRO", "p": 0, "c": 0}, {"n": "RE/MAX - UNIQUE", "p": 0, "c": 0}], "worst_agentes": [{"n": "Gerardo Porteous", "p": 279, "c": 1792}, {"n": "Guillermo Rodriguez Aguilera", "p": 274, "c": 1820}, {"n": "Francisco Ferrer", "p": 234, "c": 1593}, {"n": "Oscar Pescetto Jerez", "p": 231, "c": 1598}, {"n": "Aracelly Arancibia Aliste", "p": 224, "c": 1464}, {"n": "Carolaine Ruff Silva", "p": 222, "c": 1431}, {"n": "Ronny Saa Torres", "p": 220, "c": 1370}, {"n": "BROKER Hernan Andrade", "p": 207, "c": 1520}, {"n": "Catalina Silva Pardo", "p": 206, "c": 1301}, {"n": "Manuel Garay", "p": 205, "c": 1318}], "zero_agentes": ["Jorge  Luis  Ramirez  Delgado", "Administración  R E M A X  Exclusive", "Hugo Knüst", "Maria Jose Orrego", "Carolina Gil Lajaña", "Bastian Zimmermann", "Natalia Knust", "Juan Pino Vera", "Juan Esteban Leon", "Leslie Olivares", "Laura Huenupe", "Carla Ruiz", "Alejandra Garrido Inostroza", "Mariadela Pavez", "Julien Delard Pizarro", "Paulina Ruiz", "Esteban Becerra", "Trinidad Fernandez", "Flor Rojas", "María Valentina Prado Donoso", "Daniela Aguilar", "Patricia Figueroa", "Jose Luis Vargas", "Pia Ramirez", "Cristian Morales", "Tatiana Tapia", "Team Austral Triana Marti Zagazeta", "Cristian López", "Adriana Avendaño Sanchez", "Cristal Mendoza Pinto", "Javier Micin", "Cristal Mendoza Pinto", "Soledad Prieto Irribarra", "Consuelo Cerda", "Silvia Sepúlveda Contreras", "Carmen Lazo", "Maria Graciela Solano", "Facundo Sarobe", "Sebastián Aliaga", "Alejandro Quiroz", "Maria Loreto Vera", "Ana Maria Valdebenito", "Carmen Guerra", "Karen Cekalovic", "Claudia Oyarzo", "Andrea De La Fuente", "Felipe Olivares", "Karina Gomez", "Andres Bustos", "Manuel San Martin", "Team Austral Member Sebastian Andres Massad Pedrero", "Jacqueline Delgado", "Camila Gomez", "Leslie Valdes", "Paula Diaz Munizaga", "Arnoldo Moreno Urrea", "Yuli Abreu Leon TEAM YOORDLIS", "Marlene Torres", "Felipe Levipan TEAM INFINITY", "Marcela Cubillos", "Maritza Adames", "TEAM NUNES Giovanna Rivano", "Kimie  Inoue", "Alejandra Carvajal", "Administración REMAX ICON", "Ma. Verónica Riquelme", "Carolyne Avendaño", "Administración RE/MAX Bosques", "Andrea Rojas", "Flavio Tapia Carmagnani", "Javiera Pardo Ruz", "Ignacia Diaz Saez", "Luis Verdu", "Eduardo Bustos", "José Simpson González", "Graciela Urrutia", "Luis Castro", "Claudio Vera", "Pamela Diaz", "Natalia San Martín", "Mario Riquelme", "Pablo Vargas Meza", "Carlos Cuevas", "Monserrat Jorquera", "Claudia Oyarzo", "Benjamín Loyola Espinoza", "Pablo Jose Gariboldi", "Rodrigo Cordova", "Patricio Berrios", "Federico Tapia Ramírez", "Ricardo Adriazola", "Caroline Kamerling Russell", "Héctor Guzmán", "Cristian Avilés", "Administración  R E/ M A X  Select", "Administración  R E/ M A X  Buró", "Luciana Pereyra", "Maximiliano Schell", "Jorge Salazar Ahumada", "Mike Vivas Vivas", "Alejandra Negrete Arza", "Karla Catalan Torres", "Ana Galassi", "Gabriela Perez", "Mario Cortes Saavedra", "Giannina Gomez", "Viviana Leyton", "Alvaro Robles", "Pedro Rodriguez Reyes", "Administración REMAX One", "Paula Soto Morales", "Patricia Cordero", "Marcela Roman", "Macarena López", "Christian Aguilera Espinoza", "Constanza Castillo Avalos", "Fabiana Sotelo", "Yer Valencia", "Sabina Cruz Gutiérrez", "Claudia Jara", "Juan Carlos Hernandez", "Monica Arenas Huerta", "Pablo Godoy", "Francisco Barraza Ramírez TEAM YOORDLIS", "Daniela Saavedra", "Camila Hernández Auger", "Magdalena Rencoret", "Team Icarus - Trinidad Errázuriz", "BROKER Giovanna Bravo", "Team Icarus - Raimundo Cabrera", "Valeska Avello", "Dunia Rojas Sutil", "Eva Franch", "Team  Arellano  Claudia  Mengozzi", "María  Paz  Bautista", "Sylvia  Pino  Monroy", "Rodrigo  Bravo", "Grethel  Careaga", "Elena  Manríquez", "Mauricio Bittencourt", "Administración RE/MAX EXTRA", "Alejandra  Montero", "BROKER Katherine Borgeaud Salazar", "Marco Vera Temer Broker Owner", "Carlos Gonzalez Bustamante", "Gabriela Fuentealba", "Cesar Arcos Soto", "Gabriela Cifuentes", "Marcela Campos Bello", "Andrea Corrado", "Andrea Rojo", "Juanita Muñoz Riquelme TEAM YOORDLIS", "Vicky Candia White", "Paola Cofre", "Andres Naranjo Araya", "Claudia Arco Rojas", "Eugenia Pugh Muñoz", "Yasna Arquero Rodriguez", "Broker -   María  José  Zúñiga", "Cristian  Reyes", "Cristian Jerez TEAM YOORDLIS", "Enrique Villarroel", "Renato Soto Hidalgo", "Administración REMAX Titanio", "Blanca Bathich Peñaloza", "BROKER Alejandra Ugalde", "Gonzalo Calderón", "Fernando  Martinez", "Jimena Muñoz Miranda", "Valentina Fuentes", "Leonel Moran", "Rodrigo Estay", "Yildy Mendoza", "Fernando Baldissoni Miretti", "Rosa Soto", "Victor Fernandez", "Macarena Torres", "Alejandra Velis", "M Fernanda Sotomayor", "Angela Flores", "Josefa Ossa", "Pablo Cisternas", "Maria Muñoz Gonzalez", "Cindy Bazza Mercado", "Vanessa Costa", "Francisca Paredes", "Evelyn Caro", "Marco Iriarte Briceño    TEAM INFINITY", "Martin Trepicho", "Eric Salinas Mayne", "Zoraya Perez", "Administración REMAX Real Home", "BROKER Juan Pablo Pumarino", "Cristian Silva Corrales", "Rodrigo Morales", "Lilian Musalem Lamas", "Paulina Martinez Geiger", "Luis Norambuena", "Camila Ariz", "Camilo Araya Nuñez", "Angeles Perez Navarro", "María Paz Sepúlveda", "Daniela Zavala", "Team Austral Member Angelica Opazo", "Marisol Arias Acuña", "Nicolas Rothery", "Gonzalo Aracena", "Karen Vollmer", "Nancy Castro Howard", "Georgi Zencovich", "Carmen Luz Labbé", "Carolina De La Fuente", "Felipe Celis", "Trinidad Lazo", "Ramiro Tapia", "Lorena Burgos Vivanco", "Vidalia Rojas Arancibia", "Yuval  Ben  Haym", "test user", "Administración  R E/ M A X  Acción", "Administración  R E/ M A X  Enlace", "Administración  R E M A X  Innova", "Percy Morales", "Ramiro Becerra", "Administración REMAX Synergy", "Rocio Quevedo", "Joseph Rodriguez", "Carla Olmedo", "Jocelyn Armijo Bruna", "Rodolfo Hevia", "Luz Faúndez", "Luis Popovich", "Victor Proschler", "Ilse Sepulveda", "Patricio Monsalve", "Matías Barriga", "Walter Sommer", "Sol Caro", "Ximena Pardo", "Yenifer Valdes", "Paula Rodriguez", "Santiago Sánchez Silva", "Javiera Ruiz Morales", "Pia Muñoz", "Arnaud Koell               TEAM YOORDLIS", "Alejandra Miranda", "Claudia Lopez Sanchez", "Macarena Baraybar", "Gloria Avalos", "Javiera Zamorano", "Camilo Burgos Bustos", "Javier Pinto Gonzalez", "Mónica Bravo G.", "BROKER Juan Mauricio Quiroz", "Evelyn Bernner", "Ali Pinto", "Felipe Sepúlveda", "Camila Fischer Vallejo", "Administración  R E/ M A X  Supreme", "Administración RE/MAX Passion", "Carolina Andrea Vukasovic Milovic", "Karina Galvez", "Giancarlo Castillo", "Carolina Perez", "Jonatan Merlino", "Hernan Alonso Rocha", "Paola Castro", "Milena Essus", "Daniela Cheul", "Felipe Madariaga Galeno", "Maria Ignacia Jeno", "Jennifer Crew", "Marcela Kaftanski", "Alejandra McKay", "Patricio Barahona", "Natalia Zapata", "Administración REMAX Unique", "Marta Mackiewicz", "Sergio Huerta Reyes", "Alex Gajardo Innocenti", "Josefa Allel", "Margarita De La Fuente Ibañez", "Ana Maria Sir", "Camilo Hernandez", "Carolina Carvajal", "David Arellano Cornejo", "Rosmar Herrera", "Yolanda Lopez Diaz", "Pamela Gaviño", "Christian Chain", "B R O K E R  Karime  Sukni  Rogers", "Ronald  Ureta  Melgarejo", "Romeo Noriega", "Andres Preminger", "Maryelyn Laguado", "Francisco Sepulveda", "Gabriela Estrella", "BROKER OWNER RE/MAX INNOVA Olivier De Greef", "Leslie Aguilera Mejias", "Paulina Monsalve Manriquez", "Carlos Caceres", "Carla Mármol", "Constanza Igualt Swett", "Neila Pérez", "Franco Maureira", "Greysy Gomez", "Sebastian Vasquez", "Luis Gutierrez Zarate", "Paula Afani Saud - Broker Owner - Directora Comercial", "Cesar Rojas Arraño", "TEAM TRINI AMENABAR María José Guzmán", "Carola Rodriguez", "Fanny Valenzuela García", "Camila Mesina", "Daniela Blanco", "Carlos Tordecilla Castillo", "Silvana Mallardo", "Administración  R E/ M A X  Futuro", "Marina  Ratkevich", "Maité  Brito", "Carolina Caceres", "Gabriel Cabeza Perez", "Mateo Moral", "Sebastian Muñoz", "Salvador Gallardo", "Marcelo Escobar", "REMAX First", "BROKER Paulo Peña", "Daniela Bugedo", "Rodrigo Perez TEAM YOORDLIS", "Fanny Ortiz Poblete", "María José Karadima Labbé", "BROKER Eduardo Hola", "Matías Rozas", "Maria Fernanda Gomez", "Rafael Errázuriz", "Hugo Pollak", "Juan Carlos Margue", "Fabián Torres Mosquera", "Christian Araya Carreño        TEAM YOORDLIS", "Claudia Cortés", "Felipe Contreras Espinoza", "Manager Cindy Rebolledo", "Claudia Gonzalez", "Suzana Mimica", "Administración  R E/ M A X  Advance", "B R O K E R  Daniela  Mora  Escarate", "Rodman Kephart", "Broker - Italo Catenacci", "Gabriel Fernández", "Sebastian Risco Rodriguez", "Francisca Vial", "Patricia Ceron Gamboa", "Cinthia Morales", "Maria Fernanda Medina Roa TEAM YOORDLIS", "Maria Poblete", "Alejandro Jerez", "Jorge Irarrázaval Trigo", "Ximena Figueroa", "Carlo Casorzo Casorzo", "Eloisa Castillo", "Pilar Soto Fernandez", "Juan Munoz", "Karla Muñoz Lepin", "Victoria Osses", "Gabriela Sarmiento"], "propiedades_def": [{"id": "1028004033-121", "p": 16, "c": 97}, {"id": "1028004044-103", "p": 17, "c": 103}, {"id": "1028004040-74", "p": 18, "c": 136}, {"id": "1028108058-46", "p": 28, "c": 219}, {"id": "1028004005-556", "p": 28, "c": 178}, {"id": "1028018114-575", "p": 13, "c": 87}, {"id": "1028116003-31", "p": 21, "c": 142}, {"id": "1028108058-72", "p": 27, "c": 168}, {"id": "1028004044-102", "p": 20, "c": 147}, {"id": "1028004044-65", "p": 28, "c": 159}]},
   google: {
     gsc: {
       "periodo": "09 mar – 08 jun 2026",
@@ -515,7 +407,7 @@ function render() {
     tblWA.appendChild(tr);
   });
   const trMore = document.createElement('tr');
-  trMore.innerHTML = `<td colspan="4" style="color:#888;font-style:italic;font-size:13px">… y ${730 - DATA.ilist.zero_agentes.length} agentes más con descripción deficiente (< 600 car). Ver Excel completo.</td>`;
+  trMore.innerHTML = `<td colspan="4" style="color:#888;font-style:italic;font-size:13px">… y ${726 - DATA.ilist.zero_agentes.length} agentes más con descripción deficiente (< 600 car). Ver Excel completo.</td>`;
   tblWA.appendChild(trMore);
 
   // iList - Deficient properties
@@ -532,7 +424,7 @@ function render() {
   const tblPropNote = document.getElementById('tbl-propiedades');
   if (tblPropNote) {
     const trN = document.createElement('tr');
-    trN.innerHTML = `<td colspan="5" style="color:#888;font-style:italic;font-size:13px">… y ${588 - 30} propiedades más con descripción deficiente. Ver <em>ilist_resultados_2026-06-22.xlsx</em> para la lista completa.</td>`;
+    trN.innerHTML = `<td colspan="5" style="color:#888;font-style:italic;font-size:13px">… y 0 propiedades más. Lista completa en <em>ilist_resultados_2026-06-30.xlsx</em>.</td>`;
     tblPropNote.appendChild(trN);
   }
 
@@ -675,6 +567,38 @@ const SNAPSHOTS = [
       "ctr": 4.58,
       "position": 7.66
     }
+  },
+  {
+    "fecha": "2026-06-30",
+    "label": "Jun 2026 S2",
+    "ilist": {
+      "agentes": {
+        "total": 1076,
+        "def": 726,
+        "pct": 67.5
+      },
+      "oficinas": {
+        "total": 51,
+        "def": 26,
+        "pct": 51.0
+      },
+      "propiedades": {
+        "total": 8547,
+        "def": 10,
+        "pct": 0.12
+      }
+    },
+    "web": {
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    "gsc": {
+      "clicks": 81840,
+      "impressions": 1788358,
+      "ctr": 4.58,
+      "position": 7.66
+    }
   }
 ];
 
@@ -807,4 +731,4 @@ window.addEventListener('DOMContentLoaded', render);
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
