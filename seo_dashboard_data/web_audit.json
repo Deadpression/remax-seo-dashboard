@@ -57,4 +57,7 @@
     "positivos": [
       "Permisos explícitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot",
       "Schema Organization y WebSite con SearchAction presentes",
-      "Sitemap estructurado facilit
+      "Sitemap estructurado facilita descubrimiento de URLs a crawlers avanzados"
+    ]
+  }
+}

@@ -161,26 +161,26 @@ h2.section-title:first-child { margin-top: 0; }
     <div class="ilist-grid">
       <div class="ilist-card">
         <h3>🏢 Oficinas</h3>
-        <div class="big-pct warn">51%</div>
-        <div class="sub">deficientes (26 de 51)</div>
+        <div class="big-pct warn">52%</div>
+        <div class="sub">deficientes (27 de 52)</div>
         <div class="avgs">Umbral mínimo: 600 car</div>
       </div>
       <div class="ilist-card">
         <h3>👤 Agentes</h3>
         <div class="big-pct warn">68%</div>
-        <div class="sub">deficientes (726 de 1076 activos)</div>
+        <div class="sub">deficientes (707 de 1044 activos)</div>
         <div class="avgs">Umbral mínimo: 600 car</div>
       </div>
       <div class="ilist-card">
         <h3>🏠 Propiedades</h3>
-        <div class="big-pct good">0.12%</div>
-        <div class="sub">deficientes en Excel (10 de 8547)</div>
+        <div class="big-pct warn">6.4%</div>
+        <div class="sub">deficientes vía API (602 de 9371)</div>
         <div class="avgs">Umbral mínimo: 590 car</div>
       </div>
     </div>
 
     <h2 class="section-title">Oficinas — Detalle (prioridad alta)</h2>
-    <p style="font-size:13px;color:#666;margin-top:-4px">26 de 51 oficinas no alcanzan el umbral mínimo (600 caracteres). Ordenadas de mayor a menor contenido.</p>
+    <p style="font-size:13px;color:#666;margin-top:-4px">27 de 52 oficinas no alcanzan el umbral mínimo (600 caracteres). Ordenadas de mayor a menor contenido.</p>
     <table>
       <thead><tr><th>Oficina</th><th>Palabras</th><th>Caracteres</th><th>Estado</th></tr></thead>
       <tbody id="tbl-oficinas"></tbody>
@@ -193,8 +193,8 @@ h2.section-title:first-child { margin-top: 0; }
       <tbody id="tbl-worst-agentes"></tbody>
     </table>
 
-    <h2 class="section-title" style="margin-top:32px">Propiedades — Deficientes (10 casos en Excel)</h2>
-    <p style="font-size:13px;color:#666;margin-top:-4px">10 de 8547 propiedades activas en Excel tienen descripción deficiente (&lt;30 palabras o &lt;150 caracteres). Ver Excel para detalle.</p>
+    <h2 class="section-title" style="margin-top:32px">Propiedades — Deficientes (602 casos vía API)</h2>
+    <p style="font-size:13px;color:#666;margin-top:-4px">602 de 9371 propiedades activas tienen descripción deficiente (&lt;590 caracteres). Ver Excel para detalle.</p>
     <table>
       <thead><tr><th>MLS ID</th><th>Palabras</th><th>Caracteres</th><th>URL</th><th>Estado</th></tr></thead>
       <tbody id="tbl-propiedades"></tbody>
@@ -606,6 +606,17 @@ const SNAPSHOTS = [
       "ctr": 4.58,
       "position": 7.66
     }
+  },
+  {
+    "fecha": "2026-07-01",
+    "label": "Jul 2026 S1",
+    "ilist": {
+      "agentes": { "total": 1044, "def": 707, "pct": 67.7 },
+      "oficinas": { "total": 52, "def": 27, "pct": 51.9 },
+      "propiedades": { "total": 9371, "def": 602, "pct": 6.4 }
+    },
+    "web": { "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40 },
+    "gsc": { "clicks": 81840, "impressions": 1788358, "ctr": 4.58, "position": 7.66 }
   }
 ];
 
