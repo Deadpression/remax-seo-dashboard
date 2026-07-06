@@ -1,8 +1,11 @@
 {
-  "fecha": "2026-06-30",
+  "fecha": "2026-07-06",
   "dominio": "remax.cl",
+  "nota_metodologica": "Revisión 2026-07-06: no fue posible re-verificar en vivo robots.txt, sitemap.xml, JSON-LD ni alt de imágenes porque la extensión Claude en Chrome no estuvo disponible (desconectada) y el fetch directo de sub-rutas quedó bloqueado por restricción de procedencia de URL. Se confirmó vía fetch de la raíz que el HTML inicial sigue siendo un shell CSR vacío (solo meta viewport), consistente con el hallazgo previo. Scores y hallazgos de esta sección se mantienen sin cambios respecto al 2026-07-01 (última verificación completa) hasta la próxima revisión con navegador disponible.",
   "historico": [
-    {"fecha": "2026-06-17", "seo_audit": 58, "technical_seo": 45, "ai_visibility": 40}
+    {"fecha": "2026-06-17", "seo_audit": 58, "technical_seo": 45, "ai_visibility": 40},
+    {"fecha": "2026-06-30", "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40},
+    {"fecha": "2026-07-01", "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40}
   ],
   "seo_audit": {
     "score": 67,
@@ -45,19 +48,4 @@
   },
   "ai_visibility": {
     "score": 40,
-    "resumen": "Sin cambios estructurales. robots.txt sigue otorgando permisos a los principales bots de IA, pero la arquitectura CSR impide que estos crawlers indexen contenido real. El schema es básico (Organization + WebSite) y no incluye RealEstateListing, lo que limita la comprensión del catálogo por parte de modelos de IA.",
-    "criticos": [
-      "Contenido no disponible para crawlers de IA sin ejecución de JS (arquitectura CSR sin cambios)",
-      "Regla '*AI* Disallow: /' en robots.txt puede bloquear bots de IA genéricos no listados explícitamente"
-    ],
-    "advertencias": [
-      "Sin schema RealEstateListing — los modelos de IA no pueden entender el catálogo de propiedades estructuradamente",
-      "Sin datos estructurados de agentes (schema Person/RealEstateAgent)"
-    ],
-    "positivos": [
-      "Permisos explícitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot",
-      "Schema Organization y WebSite con SearchAction presentes",
-      "Sitemap estructurado facilita descubrimiento de URLs a crawlers avanzados"
-    ]
-  }
-}
+    "resumen": "Sin cambios estructurales. robots.txt sigue otorgando permisos a los principales bots de IA, pero la arquitectura CSR impide que estos crawlers indexen contenido real. El schema es básico (Organization + WebSite) y no incluye RealEstateListing, lo que limita la comprensión del catálogo por parte 
