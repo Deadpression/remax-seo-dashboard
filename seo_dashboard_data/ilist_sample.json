@@ -1,30 +1,30 @@
 {
-  "fecha_muestra": "2026-07-01",
-  "metodologia": "Datos obtenidos vía REX API (GryphTech) de rexapi.gryphtech.com. Agentes: descripción combinada desde /associates endpoint. Oficinas: descripción desde /offices endpoint. Propiedades: /propertydescriptions/{id} DescriptionType 629 (web). HTML decodificado y contado. ShortLinks desde OurOffices/OurAgents XLS.",
+  "fecha_muestra": "2026-07-06",
+  "metodologia": "Datos obtenidos vía REX API (GryphTech) de rexapi.gryphtech.com, autenticado con OAuth 2.0 (client_id/secret propios). Agentes: campos Slogan+Closer+BulletPoint1/2/3 desde /associates (default: solo activos, UserDisabled/Terminated excluidos automáticamente por el endpoint). Oficinas: Slogan+OfficeDescription+Closer+BulletPoint1/2/3 desde /offices?officeID={id} (default: solo activas). Propiedades: IDs obtenidos vía /properties?officeID={id} iterando las 52 oficinas activas (el endpoint /properties sin filtro de oficina devuelve el catálogo global multi-país, no solo Chile), luego descripción vía /propertydescriptions/{mlsId} tomando el texto más largo entre todas las entradas devueltas. HTML decodificado y contado. Sin uso de Excel (OurAgents/OurOffices/OurProperties): 100% de los datos provienen de REX API por instrucción explícita del usuario.",
   "promedios": {
     "agentes": {
-      "palabras": 60,
-      "caracteres": 409
+      "palabras": 59,
+      "caracteres": 402
     },
     "oficinas": {
       "palabras": 100,
-      "caracteres": 673
+      "caracteres": 672
     },
     "propiedades": {
-      "palabras": 232,
-      "caracteres": 1513
+      "palabras": 235,
+      "caracteres": 1539
     }
   },
   "totales": {
-    "agentes_activos": 1044,
-    "agentes_deficientes": 707,
-    "agentes_pct_deficiente": 67.7,
+    "agentes_activos": 1081,
+    "agentes_deficientes": 737,
+    "agentes_pct_deficiente": 68.2,
     "oficinas_activas": 52,
     "oficinas_deficientes": 27,
     "oficinas_pct_deficiente": 51.9,
-    "propiedades_activas": 9371,
-    "propiedades_deficientes": 602,
-    "propiedades_pct_deficiente": 6.4
+    "propiedades_activas": 9287,
+    "propiedades_deficientes": 586,
+    "propiedades_pct_deficiente": 6.3
   },
   "umbrales": {
     "agente_min_chars": 600,
