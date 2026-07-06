@@ -793,4 +793,13 @@ function renderTendencias() {
       scales: {
         x: { grid:{ color:gridColor } },
         y:  { position:'left',  grid:{ color:gridColor }, title:{ display:true, text:'CTR %' } },
-        y2: { position:'right'
+        y2: { position:'right', grid:{ drawOnChartArea:false }, title:{ display:true, text:'Posición (menor=mejor)' }, reverse:true }
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', render);
+</script>
+</body>
+</html>
