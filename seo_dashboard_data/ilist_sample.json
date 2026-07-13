@@ -1,35 +1,35 @@
 {
-  "fecha_muestra": "2026-07-06",
-  "metodologia": "Datos obtenidos vía REX API (GryphTech) de rexapi.gryphtech.com, autenticado con OAuth 2.0 (client_id/secret propios). Agentes: campos Slogan+Closer+BulletPoint1/2/3 desde /associates (default: solo activos, UserDisabled/Terminated excluidos automáticamente por el endpoint). Oficinas: Slogan+OfficeDescription+Closer+BulletPoint1/2/3 desde /offices?officeID={id} (default: solo activas). Propiedades: IDs obtenidos vía /properties?officeID={id} iterando las 52 oficinas activas (el endpoint /properties sin filtro de oficina devuelve el catálogo global multi-país, no solo Chile), luego descripción vía /propertydescriptions/{mlsId} tomando el texto más largo entre todas las entradas devueltas. HTML decodificado y contado. Sin uso de Excel (OurAgents/OurOffices/OurProperties): 100% de los datos provienen de REX API por instrucción explícita del usuario.",
+  "fecha_muestra": "2026-07-13",
+  "metodologia": "Datos obtenidos via REX API (GryphTech) de rexapi.gryphtech.com, autenticado con OAuth 2.0 (client_id/secret propios) via Claude en Chrome. Agentes: campos Slogan+Closer+BulletPoint1/2/3 desde /associates (1088 registros paginados, se excluyen Terminated=true y registros de prueba/'test user'). Oficinas: Slogan+OfficeDescription+Closer desde /offices (52 registros, se excluye 1 oficina de entrenamiento 'TRAININGOFFICE'). Propiedades: IDs obtenidos via /properties?officeId={id} iterando las 52 oficinas (9327 propiedades activas encontradas), descripcion via /propertydescriptions/{mlsId} tomando el texto de DescriptionType 629 (web). HTML decodificado y contado. 100% de los datos provienen de REX API, sin uso de Excel. Nota de esta ejecucion: la transferencia de los registros individuales completos desde el navegador quedo limitada por el canal de datos de la sesion (se verificaron integramente todos los agregados/promedios/conteos sobre el 100% de los registros, pero el detalle fila por fila para el Excel se completo parcialmente - ver ilist_resultados_2026-07-13.xlsx).",
   "promedios": {
     "agentes": {
-      "palabras": 59,
-      "caracteres": 402
+      "palabras": 59.3,
+      "caracteres": 405.3
     },
     "oficinas": {
-      "palabras": 100,
-      "caracteres": 672
+      "palabras": 82.5,
+      "caracteres": 557.8
     },
     "propiedades": {
-      "palabras": 235,
-      "caracteres": 1539
+      "palabras": 232.9,
+      "caracteres": 1524
     }
   },
   "totales": {
-    "agentes_activos": 1081,
-    "agentes_deficientes": 737,
-    "agentes_pct_deficiente": 68.2,
-    "oficinas_activas": 52,
-    "oficinas_deficientes": 27,
-    "oficinas_pct_deficiente": 51.9,
-    "propiedades_activas": 9287,
-    "propiedades_deficientes": 586,
-    "propiedades_pct_deficiente": 6.3
+    "agentes_activos": 1086,
+    "agentes_deficientes": 733,
+    "agentes_pct_deficiente": 67.5,
+    "oficinas_activas": 51,
+    "oficinas_deficientes": 33,
+    "oficinas_pct_deficiente": 64.7,
+    "propiedades_activas": 9327,
+    "propiedades_deficientes": 616,
+    "propiedades_pct_deficiente": 6.6
   },
   "umbrales": {
     "agente_min_chars": 600,
     "oficina_min_chars": 600,
     "propiedad_min_chars": 590
   },
-  "fuente": "REX API (GryphTech) — rexapi.gryphtech.com/api/v1/integrator/1028005"
+  "fuente": "REX API (GryphTech) - rexapi.gryphtech.com/api/v1/integrator/1028005"
 }
