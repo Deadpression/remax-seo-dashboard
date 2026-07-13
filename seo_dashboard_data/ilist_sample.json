@@ -1,10 +1,15 @@
 {
   "fecha_muestra": "2026-07-13",
-  "metodologia": "Datos obtenidos via REX API (GryphTech) de rexapi.gryphtech.com, autenticado con OAuth 2.0 (client_id/secret propios) via Claude en Chrome. Agentes: campos Slogan+Closer+BulletPoint1/2/3 desde /associates (1088 registros paginados, se excluyen Terminated=true y registros de prueba/'test user'). Oficinas: Slogan+OfficeDescription+Closer desde /offices (52 registros, se excluye 1 oficina de entrenamiento 'TRAININGOFFICE'). Propiedades: IDs obtenidos via /properties?officeId={id} iterando las 52 oficinas (9327 propiedades activas encontradas), descripcion via /propertydescriptions/{mlsId} tomando el texto de DescriptionType 629 (web). HTML decodificado y contado. 100% de los datos provienen de REX API, sin uso de Excel. Nota de esta ejecucion: la transferencia de los registros individuales completos desde el navegador quedo limitada por el canal de datos de la sesion (se verificaron integramente todos los agregados/promedios/conteos sobre el 100% de los registros, pero el detalle fila por fila para el Excel se completo parcialmente - ver ilist_resultados_2026-07-13.xlsx).",
+  "metodologia": "Datos obtenidos via REX API (GryphTech) de rexapi.gryphtech.com, autenticado con OAuth 2.0 (client_id/secret propios) via Claude en Chrome. Agentes: campos Slogan+Closer+BulletPoint1/2/3 desde /associates (1088 registros paginados, se excluyen Terminated=true, registros de prueba/'test user', TODOS los perfiles de la Training Office OfficeID 1028001, y TODOS los perfiles cuyo nombre contenga 'Administracion' - estas dos ultimas exclusiones son una DIRECTIVA PERMANENTE del usuario desde 2026-07-13, aplicable en todas las revisiones futuras). Oficinas: Slogan+OfficeDescription+Closer desde /offices (52 registros, se excluye 1 oficina de entrenamiento 'TRAININGOFFICE'). Propiedades: IDs obtenidos via /properties?officeId={id} iterando las 52 oficinas (9327 propiedades activas encontradas), descripcion via /propertydescriptions/{mlsId} tomando el texto de DescriptionType 629 (web). HTML decodificado y contado. 100% de los datos provienen de REX API, sin uso de Excel. Nota de esta ejecucion: la transferencia de los registros individuales completos desde el navegador quedo limitada por el canal de datos de la sesion (se verificaron integramente todos los agregados/promedios/conteos sobre el 100% de los registros, pero el detalle fila por fila para el Excel se completo parcialmente - ver ilist_resultados_2026-07-13.xlsx).",
+  "reglas_permanentes": {
+    "descripcion": "Directivas del usuario aplicables a TODAS las revisiones futuras (agregado 2026-07-13)",
+    "excluir_training_office": "Excluir siempre todos los agentes cuyo OfficeID sea el de la Training Office (1028001 / shortlink TRAININGOFFICE)",
+    "excluir_perfiles_administracion": "Excluir siempre todos los agentes cuyo nombre contenga la palabra 'Administracion' (perfiles genericos de oficina, no agentes reales)"
+  },
   "promedios": {
     "agentes": {
-      "palabras": 59.3,
-      "caracteres": 405.3
+      "palabras": 60.5,
+      "caracteres": 414.0
     },
     "oficinas": {
       "palabras": 82.5,
@@ -16,9 +21,9 @@
     }
   },
   "totales": {
-    "agentes_activos": 1086,
-    "agentes_deficientes": 733,
-    "agentes_pct_deficiente": 67.5,
+    "agentes_activos": 1060,
+    "agentes_deficientes": 708,
+    "agentes_pct_deficiente": 66.8,
     "oficinas_activas": 51,
     "oficinas_deficientes": 33,
     "oficinas_pct_deficiente": 64.7,
