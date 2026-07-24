@@ -43,7 +43,7 @@
       "fecha": "2026-07-24",
       "seo_audit": 60,
       "technical_seo": 42,
-      "ai_visibility": 52
+      "ai_visibility": 65
     }
   ],
   "seo_audit": {
@@ -93,9 +93,43 @@
     ]
   },
   "ai_visibility": {
-    "score": 52,
-    "resumen": "CORRECCION same-day (2026-07-24): la primera version de este informe concluyo que el sitio era 'invisible' para IA por su arquitectura 100% CSR -- el usuario probo en vivo con ChatGPT y Gemini y confirmo que SI reconocen las guias de area y el contenido generado en el sitio, contradiciendo esa conclusion. Se corrigio el analisis con 4 busquedas reales (WebSearch) como evidencia: Google SI indexa remax.cl completo (listings individuales, microsites de agentes y oficinas aparecen en resultados) porque Googlebot ejecuta JavaScript al indexar, y la mayoria de las respuestas de IA en vivo (ChatGPT con browsing, Gemini, AI Overviews) se apoyan en ese indice en vez de crawlear el sitio de forma independiente -- por eso el CSR no es la barrera que parecia. El diagnostico correcto no es 'invisible' sino 'presencia desigual segun tipo de consulta': domina en consultas de marca ('RE/MAX Chile', '¿es confiable RE/MAX?': top resultado, 4.9/5 con 447 resenas citado), pero PIERDE la consulta generica sin nombrar marca ('mejor corredora de propiedades en Chile': no aparece, ganan Boettcher/Procasa/Fuenzalida/Avsa) y aparece en ultimo lugar (10/10) en el listado de alternativas a Portal Inmobiliario. El usuario confirma que el contenido de guias de zona SI es reconocido por ChatGPT/Gemini -- validando esa pieza de contenido como un activo real de visibilidad AI que vale la pena expandir.",
-    "tabla_prompts": [
+    "score": 65,
+    "resumen": "CORRECCION 2 (2026-07-24): la primera version de este informe concluyo 'invisible' (38/100); una segunda pasada con 4 busquedas WebSearch la subio a 52/100 ('presencia desigual segun consulta'). Esta tercera version reemplaza esa estimacion propia por una medicion real: el usuario corrio el HubSpot AEO Grader (herramienta gratuita que llama en vivo a las APIs de OpenAI/ChatGPT, Perplexity y Gemini) para 'RE/MAX Chile, Santiago Chile, Corretaje de propiedades, Bienes Raices'. Resultado: OpenAI 56/100, Perplexity 65/100, Gemini 75/100 -- promedio 65/100. Las 4 dimensiones que mide HubSpot (Reconocimiento de marca, Posicion en el mercado, Calidad de la presencia, Percepcion de marca) confirman EXACTAMENTE el mismo patron que las 4 busquedas WebSearch de la version anterior: 'Posicion en el mercado' es, sin excepcion, la dimension mas debil en los 3 proveedores (3/10 OpenAI -- en rojo, 5/10 Perplexity, 7/10 Gemini), mientras que reconocimiento de marca es fuerte (12-17/20). Dos metodos independientes (busqueda web manual y herramienta especializada con llamadas reales a LLMs) coinciden: RE/MAX Chile SI es reconocido por los modelos de IA, pero no se posiciona como opcion lider frente a competidores en consultas sin nombrar marca.",
+    "hubspot_aeo_grader": {
+      "fecha": "2026-07-24",
+      "input": {
+        "companyName": "RE/MAX Chile",
+        "geography": "Santiago, Chile",
+        "productsServices": "Corretaje de propiedades",
+        "industry": "Bienes Raices"
+      },
+      "openai": {
+        "score": 56,
+        "label": "Por buen camino",
+        "reconocimiento_marca": "12/20",
+        "posicion_mercado": "3/10",
+        "calidad_presencia": "10/20",
+        "percepcion_marca": "24/40"
+      },
+      "perplexity": {
+        "score": 65,
+        "label": "Genial",
+        "reconocimiento_marca": "15/20",
+        "posicion_mercado": "5/10",
+        "calidad_presencia": "13/20",
+        "percepcion_marca": "24/40"
+      },
+      "gemini": {
+        "score": 75,
+        "label": "Genial",
+        "reconocimiento_marca": "17/20",
+        "posicion_mercado": "7/10",
+        "calidad_presencia": "15/20",
+        "percepcion_marca": "29/40"
+      },
+      "promedio": 65
+    },
+    "tabla_prompts_websearch": [
       {
         "prompt": "mejor corredora de propiedades en Chile",
         "mencionado": "No",
@@ -126,14 +160,13 @@
       }
     ],
     "criticos": [
-      "Ausente por completo en la consulta generica 'mejor corredora de propiedades en Chile' -- pierden Boettcher, Procasa, Fuenzalida y Avsa",
-      "Ultimo lugar (10/10) en listado de alternativas a Portal Inmobiliario",
+      "'Posicion en el mercado' es la dimension mas debil en los 3 proveedores del AEO Grader (3/10 OpenAI, 5/10 Perplexity, 7/10 Gemini) -- confirmado ademas por busqueda web (ausente en 'mejor corredora de propiedades en Chile', ultimo lugar en 'alternativas a Portal Inmobiliario')",
       "Sin schema RealEstateListing en fichas de propiedad individuales -- limita que una IA entienda el catalogo de propiedades de forma estructurada, aunque el contenido en si sea indexable"
     ],
     "advertencias": [
+      "'Calidad de la presencia' tambien queda por debajo de 'Reconocimiento de marca' en los 3 proveedores (10-15/20 vs 12-17/20) -- hay margen de mejora en como se describe la marca, no solo en si se la menciona",
       "Regla ambigua '*AI* Disallow: /' en robots.txt podria generar interpretaciones inconsistentes entre bots de IA que SI crawlean de forma independiente (no todos se apoyan en el indice de Google)",
-      "Sin datos estructurados de agentes (schema Person/RealEstateAgent) -- no verificado en pagina de agente esta semana",
-      "Score sigue siendo una estimacion basada en 4 prompts de prueba + confirmacion cualitativa del usuario, no en una herramienta de tracking sistematico (ver recomendacion de herramientas)"
+      "Sin datos estructurados de agentes (schema Person/RealEstateAgent) -- no verificado en pagina de agente esta semana"
     ],
     "positivos": [
       "Google indexa remax.cl de forma completa: listings individuales, microsites de agentes y de oficinas aparecen en resultados de busqueda -- la arquitectura CSR NO esta bloqueando la indexacion en la practica",
