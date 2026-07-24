@@ -43,7 +43,7 @@
       "fecha": "2026-07-24",
       "seo_audit": 60,
       "technical_seo": 42,
-      "ai_visibility": 38
+      "ai_visibility": 52
     }
   ],
   "seo_audit": {
@@ -93,22 +93,55 @@
     ]
   },
   "ai_visibility": {
-    "score": 38,
-    "resumen": "No fue posible medir presencia/posicion/sentimiento real en respuestas de ChatGPT/Gemini/Claude en esta sesion (no hay forma de consultar esos asistentes en vivo desde aqui) -- este score sigue midiendo unicamente la disposicion TECNICA del sitio para ser citado por IA, no menciones reales. robots.txt permite explicitamente GPTBot/ClaudeBot/Google-Extended/Applebot-Extended/DeepSeekBot/Bingbot (reconfirmado hoy en vivo). Pero la arquitectura 100% CSR bloquea a cualquier crawler que no ejecute JS, y ahora se confirmo tambien que las fichas de propiedad individuales no tienen RealEstateListing schema -- un bot de IA no puede entender el catalogo de propiedades de forma estructurada ni a nivel de home ni de listing. El score baja de 40 a 38 por este ultimo punto, recien confirmado esta semana.",
+    "score": 52,
+    "resumen": "CORRECCION same-day (2026-07-24): la primera version de este informe concluyo que el sitio era 'invisible' para IA por su arquitectura 100% CSR -- el usuario probo en vivo con ChatGPT y Gemini y confirmo que SI reconocen las guias de area y el contenido generado en el sitio, contradiciendo esa conclusion. Se corrigio el analisis con 4 busquedas reales (WebSearch) como evidencia: Google SI indexa remax.cl completo (listings individuales, microsites de agentes y oficinas aparecen en resultados) porque Googlebot ejecuta JavaScript al indexar, y la mayoria de las respuestas de IA en vivo (ChatGPT con browsing, Gemini, AI Overviews) se apoyan en ese indice en vez de crawlear el sitio de forma independiente -- por eso el CSR no es la barrera que parecia. El diagnostico correcto no es 'invisible' sino 'presencia desigual segun tipo de consulta': domina en consultas de marca ('RE/MAX Chile', '¿es confiable RE/MAX?': top resultado, 4.9/5 con 447 resenas citado), pero PIERDE la consulta generica sin nombrar marca ('mejor corredora de propiedades en Chile': no aparece, ganan Boettcher/Procasa/Fuenzalida/Avsa) y aparece en ultimo lugar (10/10) en el listado de alternativas a Portal Inmobiliario. El usuario confirma que el contenido de guias de zona SI es reconocido por ChatGPT/Gemini -- validando esa pieza de contenido como un activo real de visibilidad AI que vale la pena expandir.",
+    "tabla_prompts": [
+      {
+        "prompt": "mejor corredora de propiedades en Chile",
+        "mencionado": "No",
+        "posicion": "-",
+        "sentimiento": "-",
+        "preciso": "-"
+      },
+      {
+        "prompt": "RE/MAX Chile propiedades venta arriendo (marca)",
+        "mencionado": "Si",
+        "posicion": "#1, domina resultados",
+        "sentimiento": "+",
+        "preciso": "Si"
+      },
+      {
+        "prompt": "¿es confiable RE/MAX Chile?",
+        "mencionado": "Si",
+        "posicion": "Top",
+        "sentimiento": "+",
+        "preciso": "Si -- cita 4.9/5, 447 resenas"
+      },
+      {
+        "prompt": "alternativas a Portal Inmobiliario en Chile",
+        "mencionado": "Si",
+        "posicion": "#10 de 10, ultimo lugar",
+        "sentimiento": "Neutral",
+        "preciso": "Si"
+      }
+    ],
     "criticos": [
-      "Contenido no disponible para crawlers de IA que no ejecutan JS (arquitectura CSR reconfirmada hoy)",
-      "Sin schema RealEstateListing en fichas de propiedad individuales -- confirmado hoy, no solo ausente a nivel de home",
-      "Regla ambigua '*AI* Disallow: /' en robots.txt podria generar interpretaciones inconsistentes entre bots de IA"
+      "Ausente por completo en la consulta generica 'mejor corredora de propiedades en Chile' -- pierden Boettcher, Procasa, Fuenzalida y Avsa",
+      "Ultimo lugar (10/10) en listado de alternativas a Portal Inmobiliario",
+      "Sin schema RealEstateListing en fichas de propiedad individuales -- limita que una IA entienda el catalogo de propiedades de forma estructurada, aunque el contenido en si sea indexable"
     ],
     "advertencias": [
-      "Sin datos estructurados de agentes (schema Person/RealEstateAgent) -- no verificado en pagina de agente esta semana, asumido ausente dado el patron general",
-      "Puntuacion de este informe mide solo disposicion tecnica, no menciones reales en IA -- para eso se necesita testeo manual de prompts o una herramienta de tracking dedicada"
+      "Regla ambigua '*AI* Disallow: /' en robots.txt podria generar interpretaciones inconsistentes entre bots de IA que SI crawlean de forma independiente (no todos se apoyan en el indice de Google)",
+      "Sin datos estructurados de agentes (schema Person/RealEstateAgent) -- no verificado en pagina de agente esta semana",
+      "Score sigue siendo una estimacion basada en 4 prompts de prueba + confirmacion cualitativa del usuario, no en una herramienta de tracking sistematico (ver recomendacion de herramientas)"
     ],
     "positivos": [
-      "Permisos explicitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot -- reconfirmado en vivo hoy",
-      "Schema Organization y WebSite con SearchAction presentes en el DOM",
-      "Sitemap estructurado y actualizado a hoy facilita descubrimiento de URLs a crawlers avanzados",
-      "hreflang a nivel de URL facilita el entendimiento de version de idioma por parte de crawlers avanzados"
-    ]
+      "Google indexa remax.cl de forma completa: listings individuales, microsites de agentes y de oficinas aparecen en resultados de busqueda -- la arquitectura CSR NO esta bloqueando la indexacion en la practica",
+      "Domina las consultas de marca y de confianza ('RE/MAX Chile', '¿es confiable?') con sentimiento positivo y datos reales citados (4.9/5, 447 resenas)",
+      "El usuario confirma que ChatGPT y Gemini SI reconocen el contenido de las guias de area del sitio -- un activo de contenido que ya esta funcionando para visibilidad AI",
+      "Permisos explicitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot en robots.txt",
+      "Schema Organization y WebSite con SearchAction presentes en el DOM"
+    ],
+    "recomendacion_herramientas": "Para medir esto de forma sistematica (no solo 4 prompts puntuales) se recomienda una herramienta de GEO/AEO tracking dedicada -- gratis para empezar: HubSpot AEO Grader, AI Search Visibility Checker de Semrush, Brand Radar de Ahrefs. Para seguimiento continuo con Share of Voice en IA (% de respuestas relevantes que mencionan a RE/MAX vs. competencia, en ChatGPT/Gemini/Claude/AI Overviews): Profound, Peec AI, Otterly AI, Moz Pro, o SearchFit.ai."
   }
 }
