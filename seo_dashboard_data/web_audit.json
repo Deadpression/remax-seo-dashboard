@@ -1,68 +1,114 @@
 {
-  "fecha": "2026-07-20",
+  "fecha": "2026-07-24",
   "dominio": "remax.cl",
-  "nota_metodologica": "Revisión 2026-07-20: la extensión Claude en Chrome no estuvo conectada durante esta ejecución automática y la herramienta de fetch directo solo pudo acceder a la URL raíz (https://www.remax.cl, confirmando HTML inicial vacío/CSR igual que semanas previas); robots.txt, sitemap.xml y el DOM renderizado (meta tags, JSON-LD, H1) no pudieron re-verificarse en vivo esta semana por esa restricción. Búsquedas web de control confirman que el title indexado ('Propiedades en Venta y Arriendo en Chile | RE/MAX Chile') y la estructura de dominios (remax.cl, microsites de agentes/oficinas) siguen iguales, sin señales de rediseño. Se mantienen los scores y hallazgos de la revisión 2026-07-13 (4 semanas consecutivas sin cambios estructurales: 06-30, 07-01, 07-06, 07-13). Se recomienda re-verificación completa la próxima semana si Claude en Chrome está disponible.",
+  "nota_metodologica": "Revision 2026-07-24: primera verificacion en vivo completa desde el 2026-07-13 (la del 07-20 fue heredada, sin acceso a navegador). Se uso curl directo (HTML inicial sin JS, headers, robots.txt, sitemap.xml) y el navegador embebido de Claude Code (DOM renderizado, JSON-LD, consola) contra la home Y, por primera vez, contra 2 fichas de propiedad reales tomadas del sitemap de hoy (antes solo se auditaba la home). Eso revelo hallazgos nuevos a nivel de listing (H1 duplicado, sin schema RealEstateListing, title generico) que no estaban documentados en revisiones anteriores -- por eso los 3 scores bajan esta semana, no porque el sitio haya empeorado, sino porque se amplio el alcance de la auditoria y aparecieron problemas reales que antes no se median.",
   "historico": [
-    {"fecha": "2026-06-17", "seo_audit": 58, "technical_seo": 45, "ai_visibility": 40},
-    {"fecha": "2026-06-30", "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40},
-    {"fecha": "2026-07-01", "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40},
-    {"fecha": "2026-07-06", "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40},
-    {"fecha": "2026-07-13", "seo_audit": 67, "technical_seo": 45, "ai_visibility": 40}
+    {
+      "fecha": "2026-06-17",
+      "seo_audit": 58,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    {
+      "fecha": "2026-06-30",
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    {
+      "fecha": "2026-07-01",
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    {
+      "fecha": "2026-07-06",
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    {
+      "fecha": "2026-07-13",
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    {
+      "fecha": "2026-07-20",
+      "seo_audit": 67,
+      "technical_seo": 45,
+      "ai_visibility": 40
+    },
+    {
+      "fecha": "2026-07-24",
+      "seo_audit": 60,
+      "technical_seo": 42,
+      "ai_visibility": 38
+    }
   ],
   "seo_audit": {
-    "score": 67,
-    "resumen": "Sin cambios respecto a la revisión anterior (no re-verificable en vivo esta semana por falta de acceso a navegador; ver nota metodológica). El title sigue siendo descriptivo ('Propiedades en Venta y Arriendo en Chile | RE/MAX Chile'), confirmado vía búsqueda web esta semana. Se mantienen los hallazgos de 2026-07-13.",
+    "score": 60,
+    "resumen": "Se reconfirman los criticos historicos de la home (sin H1, sin canonical, og:image vacio, sin Twitter Card) Y, por primera vez, se auditaron 2 fichas de propiedad reales del sitemap de hoy: ambas tienen 2 H1 (uno generico de la propiedad, otro de un bloque de guia de zona no relacionado), sin RealEstateListing schema, y el <title> no describe la propiedad especifica (ej. una ficha de departamento en Algarrobo tiene como title 'Vivir e invertir en la Provincia de San Antonio'). El score baja de 67 a 60 por este hallazgo nuevo, no por una regresion de lo ya conocido.",
     "criticos": [
-      "Sin H1 en la página de inicio",
-      "Sin link rel=canonical",
-      "Atributo lang del html está vacío (debería ser 'es' o 'es-CL')",
-      "og:image ausente (cadena vacía) - perjudica sharing en redes sociales",
+      "Sin H1 en la pagina de inicio",
+      "Fichas de propiedad con 2 H1 (uno de la propiedad, otro de contenido de guia de zona no relacionado) -- confirmado en 2 URLs reales del sitemap de hoy",
+      "Sin schema RealEstateListing en fichas de propiedad -- solo Organization, sin precio/direccion/fotos estructuradas",
+      "Title de fichas de propiedad no describe la propiedad especifica (usa titulo de guia de zona en vez del listing)",
+      "Sin link rel=canonical en ninguna pagina revisada (home ni listings)",
+      "og:image ausente (cadena vacia)",
       "Sin Twitter Card meta tags"
     ],
     "advertencias": [
-      "8 de 22 imágenes sin atributo alt",
-      "Title, meta description, og:tags y JSON-LD (2 bloques) existen en el DOM renderizado, pero NO en el HTML inicial servido por el servidor - invisibles para crawlers sin ejecución de JS"
+      "15 de 113 imagenes sin atributo alt en la ficha de propiedad revisada (~13%)",
+      "Title, meta description, og:tags y JSON-LD existen en el DOM renderizado pero NO en el HTML inicial servido por el servidor",
+      "Atributo lang ausente en <html> de la home; si presente (es-CL) en fichas de propiedad -- inconsistente"
     ],
     "positivos": [
-      "Title optimizado y descriptivo con keywords relevantes (confirmado vía búsqueda web 2026-07-20)",
-      "Meta description completa (>150 caracteres) con cifras de catálogo",
-      "og:title, og:description, og:type, og:url y og:locale presentes en DOM renderizado",
-      "2 bloques JSON-LD (Organization + WebSite con SearchAction)",
-      "robots.txt permite crawling general; sitemap.xml actualizado (lastmod 2026-07-10) con subsitemaps de listings, oficinas y agentes"
+      "hreflang (es-cl/en-cl) implementado a nivel de URL en el sitemap de listings -- no documentado en revisiones anteriores",
+      "URLs limpias y descriptivas (/propiedades/{tipo}/{operacion}/{comuna}/{id})",
+      "Consolidacion de dominio correcta: http, apex y www redirigen todos a https://www.remax.cl/",
+      "robots.txt permite crawling general; sitemap.xml (9 sub-sitemaps: listings, oficinas, agentes, shortlinks, guias de zona, teams) actualizado a hoy",
+      "Title y meta description presentes y descriptivos en el DOM renderizado"
     ]
   },
   "technical_seo": {
-    "score": 45,
-    "resumen": "Sin cambios: el sitio sigue siendo 100% CSR (React/SPA). Confirmado nuevamente esta semana por fetch directo del HTML inicial de la raíz: contenido de body prácticamente vacío (solo meta viewport), consistente con la medición de 2026-07-13 (2.589 bytes, body de 21 caracteres). Todo el contenido real (title, meta, H1, schema) se inyecta vía JavaScript después de la carga.",
+    "score": 42,
+    "resumen": "El sitio sigue siendo 100% CSR (React/SPA), reconfirmado hoy por curl directo: HTML inicial de 2589 bytes, <body><div id=\"root\"></div></body>, sin title/meta/H1/JSON-LD. Nuevo hallazgo esta semana: la carga de la home dispara mas de 100 requests de red (17+ bundles JS 'vendors-main', 20+ chunks adicionales, mas 5 llamadas POST redundantes a /search/listing-search/docs/search en una sola carga) -- una senal de riesgo real para Core Web Vitals (LCP) que antes no se habia cuantificado.",
     "criticos": [
-      "HTML inicial vacío (sin SSR/SSG/prerender) - reconfirmado por fetch directo sin ejecutar JS esta semana",
-      "Title, meta description, og tags y JSON-LD solo existen en DOM renderizado, no en el HTML fuente que reciben los crawlers sin motor JS"
+      "HTML inicial vacio (sin SSR/SSG/prerender) -- reconfirmado hoy por fetch directo, 2589 bytes exactos",
+      "Title, meta description, og tags y JSON-LD solo existen en DOM renderizado, no en el HTML fuente",
+      "Sin canonical tags en ninguna pagina, incluyendo fichas de propiedad"
     ],
     "advertencias": [
-      "robots.txt tiene regla 'User-agent: *AI* Disallow: /' - el patrón con asterisco no es sintaxis estándar de robots.txt, por lo que su efecto real es ambiguo (no re-verificado en vivo esta semana, dato heredado de 2026-07-13)",
-      "Depende enteramente de que los crawlers ejecuten JavaScript para indexar contenido - riesgo para Core Web Vitals (LCP) por el peso de JS necesario"
+      "Mas de 100 requests de red en la carga inicial de la home, incluyendo 5 llamadas POST duplicadas al mismo endpoint de busqueda -- nuevo hallazgo 2026-07-24",
+      "robots.txt tiene regla 'User-agent: *AI* Disallow: /' -- sintaxis con asterisco no estandar, efecto ambiguo",
+      "Depende enteramente de que los crawlers ejecuten JavaScript para indexar contenido"
     ],
     "positivos": [
-      "HTTPS activo",
-      "Meta viewport configurado correctamente para mobile (reconfirmado esta semana)",
-      "sitemap.xml presente y actualizado con índice de subsitemaps (listings, oficinas, agentes, shortlinks) - lastmod no re-verificado esta semana, dato heredado de 2026-07-13 (2026-07-10)"
+      "HTTPS activo, HSTS configurado, sin contenido mixto",
+      "Redirecciones correctas desde http y desde apex hacia https://www.remax.cl/ -- verificado hoy con curl",
+      "Meta viewport configurado correctamente para mobile",
+      "sitemap.xml presente, bien segmentado por tipo de contenido y actualizado a hoy (lastmod 2026-07-24)",
+      "Sin errores en consola del navegador en las paginas revisadas hoy"
     ]
   },
   "ai_visibility": {
-    "score": 40,
-    "resumen": "Sin cambios estructurales. robots.txt otorgaría permisos explícitos a los principales bots de IA (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot) según la última verificación en vivo (2026-07-13); no re-verificable esta semana por falta de acceso a navegador. La arquitectura 100% CSR (reconfirmada hoy) impide que estos crawlers accedan a contenido real salvo que ejecuten JavaScript. El schema es básico (Organization + WebSite) y no incluye RealEstateListing.",
+    "score": 38,
+    "resumen": "No fue posible medir presencia/posicion/sentimiento real en respuestas de ChatGPT/Gemini/Claude en esta sesion (no hay forma de consultar esos asistentes en vivo desde aqui) -- este score sigue midiendo unicamente la disposicion TECNICA del sitio para ser citado por IA, no menciones reales. robots.txt permite explicitamente GPTBot/ClaudeBot/Google-Extended/Applebot-Extended/DeepSeekBot/Bingbot (reconfirmado hoy en vivo). Pero la arquitectura 100% CSR bloquea a cualquier crawler que no ejecute JS, y ahora se confirmo tambien que las fichas de propiedad individuales no tienen RealEstateListing schema -- un bot de IA no puede entender el catalogo de propiedades de forma estructurada ni a nivel de home ni de listing. El score baja de 40 a 38 por este ultimo punto, recien confirmado esta semana.",
     "criticos": [
-      "Contenido no disponible para crawlers de IA que no ejecutan JS (arquitectura CSR reconfirmada esta semana)",
-      "Regla ambigua '*AI* Disallow: /' en robots.txt podría generar interpretaciones inconsistentes entre distintos bots de IA (dato heredado, no re-verificado esta semana)"
+      "Contenido no disponible para crawlers de IA que no ejecutan JS (arquitectura CSR reconfirmada hoy)",
+      "Sin schema RealEstateListing en fichas de propiedad individuales -- confirmado hoy, no solo ausente a nivel de home",
+      "Regla ambigua '*AI* Disallow: /' en robots.txt podria generar interpretaciones inconsistentes entre bots de IA"
     ],
     "advertencias": [
-      "Sin schema RealEstateListing - los modelos de IA no pueden entender el catálogo de propiedades de forma estructurada",
-      "Sin datos estructurados de agentes (schema Person/RealEstateAgent)"
+      "Sin datos estructurados de agentes (schema Person/RealEstateAgent) -- no verificado en pagina de agente esta semana, asumido ausente dado el patron general",
+      "Puntuacion de este informe mide solo disposicion tecnica, no menciones reales en IA -- para eso se necesita testeo manual de prompts o una herramienta de tracking dedicada"
     ],
     "positivos": [
-      "Permisos explícitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot (dato heredado de 2026-07-13, no re-verificado en vivo esta semana)",
-      "Schema Organization y WebSite con SearchAction presentes en el DOM (dato heredado)",
-      "Sitemap estructurado y actualizado facilita descubrimiento de URLs a crawlers avanzados (dato heredado)"
+      "Permisos explicitos para GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, DeepSeekBot, Bingbot -- reconfirmado en vivo hoy",
+      "Schema Organization y WebSite con SearchAction presentes en el DOM",
+      "Sitemap estructurado y actualizado a hoy facilita descubrimiento de URLs a crawlers avanzados",
+      "hreflang a nivel de URL facilita el entendimiento de version de idioma por parte de crawlers avanzados"
     ]
   }
 }
